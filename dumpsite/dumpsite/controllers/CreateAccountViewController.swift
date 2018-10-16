@@ -20,9 +20,9 @@ class CreateAccountViewController: UIViewController {
     var userDefaultsRef: DocumentReference!
     
     // Data Holders
-    var defaultKeys = [String: Any]()
     var trashcanCount: Int!
     var trashcans: [String]!
+    var rememberMe: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +83,7 @@ class CreateAccountViewController: UIViewController {
                     }
                     self.trashcanCount = userDefaults["trashcanCount"] as? Int
                     self.trashcans = userDefaults["trashcans"] as? [String]
+                    self.rememberMe = userDefaults["rememberMe"] as? Bool
                 } else {
                     print("Document does not exist!")
                 }
@@ -93,7 +94,7 @@ class CreateAccountViewController: UIViewController {
     // Creates a user document
     func createAUserDocument(userId: String, email: String, password: String) {
         // Get default values and create user
-        let newUser = User(userId: userId, email: email, password: password, trashcanCount: trashcanCount, trashcans: trashcans)
+        let newUser = User(userId: userId, email: email, password: password, rememberMe: rememberMe, trashcanCount: trashcanCount, trashcans: trashcans)
         
         // Add new user document to users collection
         // Set merge to true to avoid overwriting if document exists

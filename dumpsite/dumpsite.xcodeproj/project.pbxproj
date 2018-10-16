@@ -39,6 +39,8 @@
 		7FE333C5217319B80086DD16 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FE333C4217319B80086DD16 /* GoogleService-Info.plist */; };
 		7FEE0436217596EE005004D5 /* DumpsiteConstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEE0435217596EE005004D5 /* DumpsiteConstructionViewController.swift */; };
 		7FEE043821759E22005004D5 /* left-arrow-angle.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FEE043721759E22005004D5 /* left-arrow-angle.png */; };
+		7FEE043A2175B251005004D5 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEE04392175B251005004D5 /* LogInViewController.swift */; };
+		7FEE043C2175F4C5005004D5 /* CustomSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEE043B2175F4C5005004D5 /* CustomSwitch.swift */; };
 		7FEEF14721751DC40010E12E /* crane-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FEEF14121751DC00010E12E /* crane-1.png */; };
 		7FEEF14821751DC40010E12E /* wheelbarrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FEEF14221751DC10010E12E /* wheelbarrow.png */; };
 		7FEEF14921751DC40010E12E /* cone.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FEEF14321751DC10010E12E /* cone.png */; };
@@ -109,6 +111,8 @@
 		7FFB83122167AE3B00ADB0A9 /* FeelsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FFB83102167AE3B00ADB0A9 /* FeelsCell.xib */; };
 		7FFB83152167CE2700ADB0A9 /* FeelsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFB83142167CE2700ADB0A9 /* FeelsTextView.swift */; };
 		7FFB83172167DBC300ADB0A9 /* NewFeelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFB83162167DBC300ADB0A9 /* NewFeelsViewController.swift */; };
+		7FFCCCD521764D1700F12215 /* sewage.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FFCCCD421764D1700F12215 /* sewage.png */; };
+		7FFCCCD721764D6E00F12215 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFCCCD621764D6E00F12215 /* LaunchScreenViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -151,6 +155,8 @@
 		7FE333C4217319B80086DD16 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7FEE0435217596EE005004D5 /* DumpsiteConstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpsiteConstructionViewController.swift; sourceTree = "<group>"; };
 		7FEE043721759E22005004D5 /* left-arrow-angle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left-arrow-angle.png"; sourceTree = "<group>"; };
+		7FEE04392175B251005004D5 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		7FEE043B2175F4C5005004D5 /* CustomSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitch.swift; sourceTree = "<group>"; };
 		7FEEF14121751DC00010E12E /* crane-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crane-1.png"; sourceTree = "<group>"; };
 		7FEEF14221751DC10010E12E /* wheelbarrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheelbarrow.png; sourceTree = "<group>"; };
 		7FEEF14321751DC10010E12E /* cone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cone.png; sourceTree = "<group>"; };
@@ -221,6 +227,8 @@
 		7FFB83102167AE3B00ADB0A9 /* FeelsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeelsCell.xib; sourceTree = "<group>"; };
 		7FFB83142167CE2700ADB0A9 /* FeelsTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeelsTextView.swift; sourceTree = "<group>"; };
 		7FFB83162167DBC300ADB0A9 /* NewFeelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeelsViewController.swift; sourceTree = "<group>"; };
+		7FFCCCD421764D1700F12215 /* sewage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sewage.png; sourceTree = "<group>"; };
+		7FFCCCD621764D6E00F12215 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,6 +321,8 @@
 				7F5B32622169FD370044951C /* EmojiViewController.swift */,
 				7FE03C1C217029890084C62E /* ProfileViewController.swift */,
 				7FEE0435217596EE005004D5 /* DumpsiteConstructionViewController.swift */,
+				7FEE04392175B251005004D5 /* LogInViewController.swift */,
+				7FFCCCD621764D6E00F12215 /* LaunchScreenViewController.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -329,6 +339,7 @@
 		7FEEF13E21751D270010E12E /* designs */ = {
 			isa = PBXGroup;
 			children = (
+				7FFCCCD421764D1700F12215 /* sewage.png */,
 				7FEEF14321751DC10010E12E /* cone.png */,
 				7FEEF14121751DC00010E12E /* crane-1.png */,
 				7FEEF14421751DC20010E12E /* crane.png */,
@@ -450,6 +461,7 @@
 				7FFB83142167CE2700ADB0A9 /* FeelsTextView.swift */,
 				7FF6E438217259DF00BC5118 /* TrashcanContentViewController.swift */,
 				7FF6E439217259DF00BC5118 /* TrashcanContentViewController.xib */,
+				7FEE043B2175F4C5005004D5 /* CustomSwitch.swift */,
 			);
 			path = "custom views";
 			sourceTree = "<group>";
@@ -541,6 +553,7 @@
 				7FFB82DE2167ADFF00ADB0A9 /* 051-laughing-2.png in Resources */,
 				7FEEF14921751DC40010E12E /* cone.png in Resources */,
 				7FFB83032167ADFF00ADB0A9 /* 051-happy-1.png in Resources */,
+				7FFCCCD521764D1700F12215 /* sewage.png in Resources */,
 				7FEE043821759E22005004D5 /* left-arrow-angle.png in Resources */,
 				7FEEF14C21751DC40010E12E /* loader.png in Resources */,
 				7FFB82FB2167ADFF00ADB0A9 /* 051-muted.png in Resources */,
@@ -678,6 +691,7 @@
 			files = (
 				7F5B3268216A704A0044951C /* MoodDelegate.swift in Sources */,
 				7F5B32632169FD370044951C /* EmojiViewController.swift in Sources */,
+				7FEE043A2175B251005004D5 /* LogInViewController.swift in Sources */,
 				7F91277D21662F0D00042380 /* CreateAccountViewController.swift in Sources */,
 				7FE03C122170241F0084C62E /* TrashcanCell.swift in Sources */,
 				7FA1FA6721687EAF00C165AA /* ReactCell.swift in Sources */,
@@ -693,6 +707,8 @@
 				7FE03C1D217029890084C62E /* ProfileViewController.swift in Sources */,
 				7FFB83112167AE3B00ADB0A9 /* FeelsCell.swift in Sources */,
 				7F91275C21661FF500042380 /* AppDelegate.swift in Sources */,
+				7FFCCCD721764D6E00F12215 /* LaunchScreenViewController.swift in Sources */,
+				7FEE043C2175F4C5005004D5 /* CustomSwitch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
