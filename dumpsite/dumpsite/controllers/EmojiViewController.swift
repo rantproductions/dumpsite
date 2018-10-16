@@ -12,7 +12,8 @@ class EmojiViewController: UIViewController {
     // TempData
     var emojis = ["051-confused", "051-greed", "051-shocked", "051-sick", "051-sleepy", "051-nerd", "051-muted", "051-surprised", "051-suspicious", "051-vain"]
     var emojiScrollSize = CGFloat()
-    var choosenEmoji = String()
+    
+    weak var moodDelegate: MoodDelegate?
     
     // Tag Views
     @IBOutlet var emojiScroll: UIScrollView!
@@ -78,13 +79,12 @@ class EmojiViewController: UIViewController {
     
     // Function assigned to each Emoji button created
     @objc func chooseEmoji(_ sender: UIButton) {
-        print(sender.currentTitle!)
-        var choosenEmoji = sender.currentTitle!
-        print(choosenEmoji)
+        var chosenEmoji = sender.currentTitle!
+        print(chosenEmoji)
         
-        if !choosenEmoji.isEmpty {
-            changBtnMoodImage(choosenEmoji: choosenEmoji)
-            choosenEmoji = String()
+        if !chosenEmoji.isEmpty {
+            moodDelegate?.changeMoodImage(chosenEmoji: chosenEmoji)
+            chosenEmoji = String()
         }
     }
     

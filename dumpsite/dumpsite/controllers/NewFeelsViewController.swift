@@ -22,6 +22,7 @@ class NewFeelsViewController: UIViewController {
     
     // Data
     var feelsContentHeight = CGFloat()
+    var emojiViewController: EmojiViewController?
     
     // Flags
     var isEmojiViewOpened : Bool = false
@@ -30,15 +31,36 @@ class NewFeelsViewController: UIViewController {
         super.viewDidLoad()
 
         // Set the Navigation Bar to transparent
+        makeNavigationBarTransparent()
+        
+        // Stop back button from appearing
+        hideBackButton()
+        
+        // Make corners of views round
+        makeCornersRound()
+        
+        // Set up text view
+        setUpFeelsContent()
+        
+        // Hide emoji options
+        hideEmojiOptions()
+        
+        getChildControllers()
+        emojiViewController?.moodDelegate = self
+    }
+    
+    func makeNavigationBarTransparent() {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
-        
-        // Stop back button from appearing
+    }
+    
+    func hideBackButton() {
         self.navigationItem.leftItemsSupplementBackButton = false
         self.navigationItem.hidesBackButton = true
-        
-        // Round corners of Views
+    }
+    
+    func makeCornersRound() {
         moodFrame.layer.cornerRadius = 15
         moodFrame.clipsToBounds = true
         btnDump.layer.cornerRadius = 12
@@ -49,31 +71,26 @@ class NewFeelsViewController: UIViewController {
         charCountSign.clipsToBounds = true
         emojiScroll.layer.cornerRadius = 15
         emojiScroll.clipsToBounds = true
-        
-        // Set textView for feelsContent
+    }
+    
+    func setUpFeelsContent() {
+        feelsContent.translatesAutoresizingMaskIntoConstraints = false
+        feelsContentHeight = feelsContent.frame.size.height
         feelsContent.delegate = self
         feelsContent.isEditable = true
-        feelsContentHeight = feelsContent.frame.size.height
-        
-        // Set placeholders for textView
-        feelsContent.text = "Rant all you want!"
+        feelsContent.text = "Come on. Rant!"
         feelsContent.textColor = UIColor.lightGray
-        
-        // Expand textView depending on text
-        feelsContent.translatesAutoresizingMaskIntoConstraints = false
         feelsContent.isScrollEnabled = false
-        
-        // Set up emoji view
+    }
+    
+    func hideEmojiOptions() {
         emojiScroll.alpha = 0
     }
     
-    func changeBtnMoodImage(choosenEmoji: String) {
-        let btnImage = UIImage(named: choosenEmoji)
-        
-        UIView.animate(withDuration: 0.1, animations: {
-            self.btnMood.setImage(btnImage, for: .normal)
-        })
-        
+    func getChildControllers() {
+        if let viewController = children.first as? EmojiViewController {
+            emojiViewController = viewController
+        }
     }
     
     @IBAction func chooseMood(_ sender: UIButton) {
@@ -113,6 +130,7 @@ class NewFeelsViewController: UIViewController {
 
 }
 
+ // Functions for TextView
 extension NewFeelsViewController: UITextViewDelegate {
     // Track if user begins editing textView
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -162,5 +180,13 @@ extension NewFeelsViewController: UITextViewDelegate {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.count
         return numberOfChars <= 240
+    }
+}
+
+extension NewFeelsViewController: MoodDelegate {
+    func changeMoodImage(chosenEmoji: String) {
+        let btnImage = UIImage(named: chosenEmoji) as UIImage?
+        btnMood.setImage(btnImage, for: .normal)
+        print("Changing to \(chosenEmoji)")
     }
 }

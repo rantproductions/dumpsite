@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Dumpiste</string>
+	<string>Dumpsite</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -26,6 +26,9 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Montserrat-Light.otf</string>
+		<string>Montserrat-Bold.otf</string>
+		<string>Montserrat-Regular.otf</string>
 		<string>Hero Light.otf</string>
 		<string>Hero.otf</string>
 	</array>

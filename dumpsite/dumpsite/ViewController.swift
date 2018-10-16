@@ -7,27 +7,57 @@
 //
 
 import UIKit
+import Firebase
 
 class ViewController: UIViewController {
 
+    // Tag Views
+    @IBOutlet var btnLogIn: UIButton!
+    
+    // Data
+    var db: Firestore!
+    var users: DocumentReference!
+    
+    // Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set the Navigation Bar to transparent
+        makeNavigationBarTransparent()
+        hideBackButton()
+        // customLogInButton()
+        
+        // Get firestore reference
+        getFirestoreDatabase()
+    }
+    
+    func makeNavigationBarTransparent() {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
-        
-        // Stop back button from appearing
+    }
+    
+    func hideBackButton() {
         self.navigationItem.leftItemsSupplementBackButton = false
         self.navigationItem.hidesBackButton = true
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func customLogInButton() {
+        btnLogIn.layer.cornerRadius = 30
+        btnLogIn.clipsToBounds = true
+        
+        let customBorder = CAShapeLayer()
+        customBorder.fillColor = nil
+        customBorder.lineWidth = 5
+        customBorder.strokeColor = UIColor.white.cgColor
+        customBorder.frame = btnLogIn.bounds
+        customBorder.path = UIBezierPath(rect: btnLogIn.bounds).cgPath
+        btnLogIn.layer.addSublayer(customBorder)
     }
-
-
+    
+    func getFirestoreDatabase() {
+        db = Firestore.firestore()
+    }
+    
+    
 }
 
