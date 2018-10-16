@@ -37,6 +37,8 @@
 		7FE333C12172FA930086DD16 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE333C02172FA930086DD16 /* User.swift */; };
 		7FE333C32172FB620086DD16 /* UserReact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE333C22172FB620086DD16 /* UserReact.swift */; };
 		7FE333C5217319B80086DD16 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FE333C4217319B80086DD16 /* GoogleService-Info.plist */; };
+		7FEE0436217596EE005004D5 /* DumpsiteConstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEE0435217596EE005004D5 /* DumpsiteConstructionViewController.swift */; };
+		7FEE043821759E22005004D5 /* left-arrow-angle.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FEE043721759E22005004D5 /* left-arrow-angle.png */; };
 		7FEEF14721751DC40010E12E /* crane-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FEEF14121751DC00010E12E /* crane-1.png */; };
 		7FEEF14821751DC40010E12E /* wheelbarrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FEEF14221751DC10010E12E /* wheelbarrow.png */; };
 		7FEEF14921751DC40010E12E /* cone.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FEEF14321751DC10010E12E /* cone.png */; };
@@ -147,6 +149,8 @@
 		7FE333C02172FA930086DD16 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7FE333C22172FB620086DD16 /* UserReact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReact.swift; sourceTree = "<group>"; };
 		7FE333C4217319B80086DD16 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7FEE0435217596EE005004D5 /* DumpsiteConstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpsiteConstructionViewController.swift; sourceTree = "<group>"; };
+		7FEE043721759E22005004D5 /* left-arrow-angle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left-arrow-angle.png"; sourceTree = "<group>"; };
 		7FEEF14121751DC00010E12E /* crane-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crane-1.png"; sourceTree = "<group>"; };
 		7FEEF14221751DC10010E12E /* wheelbarrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheelbarrow.png; sourceTree = "<group>"; };
 		7FEEF14321751DC10010E12E /* cone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cone.png; sourceTree = "<group>"; };
@@ -308,6 +312,7 @@
 				7FFB83162167DBC300ADB0A9 /* NewFeelsViewController.swift */,
 				7F5B32622169FD370044951C /* EmojiViewController.swift */,
 				7FE03C1C217029890084C62E /* ProfileViewController.swift */,
+				7FEE0435217596EE005004D5 /* DumpsiteConstructionViewController.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -419,6 +424,7 @@
 		7FFB829A2167ADA700ADB0A9 /* user-interface */ = {
 			isa = PBXGroup;
 			children = (
+				7FEE043721759E22005004D5 /* left-arrow-angle.png */,
 				7F5B2C49217210D100FCAAED /* x-button.png */,
 				7F5B2C47217205F300FCAAED /* garbage.png */,
 				7FE03C1E21703DF80084C62E /* add-2.png */,
@@ -535,6 +541,7 @@
 				7FFB82DE2167ADFF00ADB0A9 /* 051-laughing-2.png in Resources */,
 				7FEEF14921751DC40010E12E /* cone.png in Resources */,
 				7FFB83032167ADFF00ADB0A9 /* 051-happy-1.png in Resources */,
+				7FEE043821759E22005004D5 /* left-arrow-angle.png in Resources */,
 				7FEEF14C21751DC40010E12E /* loader.png in Resources */,
 				7FFB82FB2167ADFF00ADB0A9 /* 051-muted.png in Resources */,
 				7FFB82A92167ADCC00ADB0A9 /* worldwide.png in Resources */,
@@ -674,6 +681,7 @@
 				7F91277D21662F0D00042380 /* CreateAccountViewController.swift in Sources */,
 				7FE03C122170241F0084C62E /* TrashcanCell.swift in Sources */,
 				7FA1FA6721687EAF00C165AA /* ReactCell.swift in Sources */,
+				7FEE0436217596EE005004D5 /* DumpsiteConstructionViewController.swift in Sources */,
 				7FE03C16217024390084C62E /* AddTrashcanCell.swift in Sources */,
 				7FF6E43A217259DF00BC5118 /* TrashcanContentViewController.swift in Sources */,
 				7FFB83152167CE2700ADB0A9 /* FeelsTextView.swift in Sources */,

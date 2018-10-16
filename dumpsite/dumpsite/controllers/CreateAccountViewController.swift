@@ -114,6 +114,7 @@ class CreateAccountViewController: UIViewController {
         return emailPredicate.evaluate(with: email)
     }
     
+    // Sends user a verfication link
     func sendEmailVerification () {
         Auth.auth().currentUser?.sendEmailVerification() { (err) in
             // Check for errors
@@ -121,7 +122,7 @@ class CreateAccountViewController: UIViewController {
                 print("Error sending email verification: \(err.localizedDescription)")
             } else {
                 // Push another view to show message
-                self.performSegue(withIdentifier: "dumpsiteConstruction", sender: self) // temporary
+                self.performSegue(withIdentifier: "dumpsiteConstruction", sender: nil)
             }
         }
     }
@@ -179,8 +180,7 @@ class CreateAccountViewController: UIViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
-                print("=0")
-                self.view.frame.origin.y -= keyboardSize.height
+                self.view.frame.origin.y -= keyboardSize.height - 100
             }
         }
     }
@@ -188,8 +188,7 @@ class CreateAccountViewController: UIViewController {
     @objc func keyboardWillHide(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y != 0 {
-                print("!=0")
-                self.view.frame.origin.y += keyboardSize.height
+                self.view.frame.origin.y += keyboardSize.height - 100
             }
         }
     }
