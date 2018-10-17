@@ -16,13 +16,15 @@ class CreateAccountViewController: UIViewController {
     @IBOutlet var passwordField: UITextField!
     
     // Firestore References
-    var db: Firestore!
+    var firestoredb: Firestore!
     var userDefaultsRef: DocumentReference!
     
     // Data Holders
     var trashcanCount: Int!
     var trashcans: [String]!
     var rememberMe: Bool!
+    
+    var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +37,13 @@ class CreateAccountViewController: UIViewController {
         // Get firestore reference
         getFirestoreDatabase()
         getDefaultUserValues()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Stop activity indicator
+        stopActivityIndicator()
     }
 
     // Makes navbar transparent
@@ -53,19 +62,19 @@ class CreateAccountViewController: UIViewController {
     // Gets firstore reference and fixes date bug
     func getFirestoreDatabase() {
         // Get reference to Dumpsite's Firestore Database
-        db = Firestore.firestore()
+        firestoredb = Firestore.firestore()
         
         // Avoid breaking the app cause by the change of behavior
         // of system Date objects
-        let settings = db.settings
+        let settings = firestoredb.settings
         settings.areTimestampsInSnapshotsEnabled = true
-        db.settings = settings
+        firestoredb.settings = settings
     }
     
     // Gets user default values from database
     func getDefaultUserValues() {
         // Get reference to user document in defaults collection
-        userDefaultsRef = db.collection("defaults").document("user")
+        userDefaultsRef = firestoredb.collection("defaults").document("user")
         
         // Get trashcan count and list of trashcans
         // By default, a dumpsite has one trashcan upon construction
@@ -92,13 +101,13 @@ class CreateAccountViewController: UIViewController {
     }
     
     // Creates a user document
-    func createAUserDocument(userId: String, email: String, password: String) {
+    func createAUserDocument(_ userId: String, _ email: String, _ password: String) {
         // Get default values and create user
         let newUser = User(userId: userId, email: email, password: password, rememberMe: rememberMe, trashcanCount: trashcanCount, trashcans: trashcans)
         
         // Add new user document to users collection
         // Set merge to true to avoid overwriting if document exists
-        db.collection("users").document(newUser.dictionary["userId"] as! String).setData(newUser.dictionary, merge: true) { err in
+        firestoredb.collection("users").document(newUser.dictionary["userId"] as! String).setData(newUser.dictionary, merge: true) { err in
             // Check for errors
             if let err = err {
                 print("Error appending new user in collection: \(err.localizedDescription)")
@@ -128,7 +137,11 @@ class CreateAccountViewController: UIViewController {
         }
     }
 
+    // Creates a user
     @IBAction func constructDumpsite(_ sender: UIButton) {
+        // Start activity indicator to show that something is happening
+        showActivityIndicator()
+        
         // Check first if fields are empty
         guard let email = emailField.text, let password = passwordField.text else {
             print("An email and a password wouldn't hurt, right?")
@@ -145,16 +158,18 @@ class CreateAccountViewController: UIViewController {
                     // Create a user document
                     if let authResult = authResult { // Check if there's a user created
                         // Use uid given by firebase to every user created
-                        self.createAUserDocument(userId: authResult.user.uid, email: email, password: password)
+                        self.createAUserDocument(authResult.user.uid, email, password)
                         
-                        // Send email verification
+                        // Send email verification to user
                         self.sendEmailVerification()
                     } else {
+                        // Show error on console
                         print("No user was created.")
                     }
                 }
             }
         } else {
+            // Show error on console
             print("Email address is not valid")
         }
     }
@@ -181,7 +196,7 @@ class CreateAccountViewController: UIViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height - 100
+                self.view.frame.origin.y -= keyboardSize.height - 150
             }
         }
     }
@@ -189,8 +204,33 @@ class CreateAccountViewController: UIViewController {
     @objc func keyboardWillHide(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y != 0 {
-                self.view.frame.origin.y += keyboardSize.height - 100
+                self.view.frame.origin.y += keyboardSize.height - 150
             }
+        }
+    }
+    
+    // Show activty inidicator
+    func showActivityIndicator() {
+        // Initialize activity indicator
+        activityIndicator = UIActivityIndicatorView()
+        
+        // Set properties
+        let viewMaxY = view.frame.maxY
+        let indicatorYPos = viewMaxY - 60
+        activityIndicator.center = CGPoint(x: self.view.center.x, y: indicatorYPos)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
+        self.view.addSubview(activityIndicator)
+        
+        // Display activity indicator
+        activityIndicator.startAnimating()
+    }
+    
+    // Stop activity indicator
+    func stopActivityIndicator() {
+        // Check first if activity indicator is empty
+        if let activityIndicator = self.activityIndicator {
+            activityIndicator.stopAnimating()
         }
     }
 }

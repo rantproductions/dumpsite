@@ -19,7 +19,7 @@ class LogInViewController: UIViewController {
     
     
     // References
-    var db: Firestore!
+    var firestoredb: Firestore!
     var userCollection: CollectionReference!
     var userDocument: DocumentSnapshot!
     
@@ -30,7 +30,24 @@ class LogInViewController: UIViewController {
     // Listener
     var handle: AuthStateDidChangeListenerHandle?
     
-    // Functions
+    // Indicators
+    var activityIndicator: UIActivityIndicatorView!
+    
+    // Inherited Functions
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Get firestore reference
+        getFirestoreDatabase()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Stop activity indicator
+        stopActivityIndicator()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,20 +57,14 @@ class LogInViewController: UIViewController {
         moveViewWithKeyboard()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Get firestore reference
-        getFirestoreDatabase()
-        getCurrentUser()
-    }
-    
+    // Make navigation bar transparent
     func makeNavigationBarTransparent() {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
     }
     
+    // Hides back button
     func hideBackButton() {
         self.navigationItem.leftItemsSupplementBackButton = false
         self.navigationItem.hidesBackButton = true
@@ -62,45 +73,77 @@ class LogInViewController: UIViewController {
     // Gets firstore reference and fixes date bug
     func getFirestoreDatabase() {
         // Get reference to Dumpsite's Firestore Database
-        db = Firestore.firestore()
+        firestoredb = Firestore.firestore()
         
         // Avoid breaking the app cause by the change of behavior
         // of system Date objects
-        let settings = db.settings
+        let settings = firestoredb.settings
         settings.areTimestampsInSnapshotsEnabled = true
-        db.settings = settings
+        firestoredb.settings = settings
     }
     
     // Signs in user
     @IBAction func signIn(_ sender: UIButton) {
+        // Start activity indicator to show that something's happening
+        showActivityIndicator()
+        
         // Check if fields are empty
         guard let email = emailField.text, let password = passwordField.text else {
+            // Show error on console
             print("Empty fields!")
             return
         }
         
-        // Before signing in check if user wants to keep his session
-        
-        
         // Sign in user
-        Auth.auth().signIn(withEmail: email, password: password) { (user, err) in
+        Auth.auth().signIn(withEmail: email, password: password) { (auth, err) in
             if let err = err {
                 // Show message prompt when there's error
                 print("Error signing in: \(err.localizedDescription)")
+                
+                // Show what's wrong to user though alert
+                self.stopActivityIndicator() // Stop activity indicator
+                
+                // Create an alert
+                let message = "The password you entered doesn't match the password in our records."
+                let alert = UIAlertController(title: "Wrong Password", message: message, preferredStyle: .alert)
+                alert.view.tintColor = UIColor.red
+                alert.addAction(UIAlertAction(title: "I'll try again", style: .default, handler: nil))
+                self.present(alert, animated: true)
+                
             } else {
-                // Check if user trying to log in is the current user
-                if let user = Auth.auth().currentUser {
-                    // Check if email is verified
-                    if !user.isEmailVerified {
-                        // Show message prompt
-                        print("Email not yet verified")
-                    } else {
+                // Check if auth object is not empty
+                if let auth = auth {
+                    // Update rememberMe field
+                    self.updateUserSession(auth.user)
+                    
+                    // Check if email is verified. If not, prevent
+                    // user from accessing the Feed View
+                    if auth.user.isEmailVerified {
                         // Push to Feed View
                         self.performSegue(withIdentifier: "toFeedView", sender: nil)
+                    } else {
+                        // Show error on console
+                        print("Email not yet verified.")
+                        
+                        // Show what's wrong to user though alert
+                        self.stopActivityIndicator() // Stop activity indicator
+                        
+                        // Create an alert
+                        let message = "In order to speed up your dumpsite's construction, verify your email first!"
+                        let alert = UIAlertController(title: "Excited much?", message: message, preferredStyle: .alert)
+                        alert.view.tintColor = UIColor.red
+                        alert.addAction(UIAlertAction(title: "Got it!", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                        
+                        // In here, we are just preventing the user from
+                        // accessing a view but the truth is he is already
+                        // signed in. Therefore, we must sign him out.
+                        self.signOutUser()
                     }
                 } else {
-                    // Show message prompt
-                    print("Not current user!")
+                    // For the mean time, ignore this.
+                    // I dunno what if else is needed because will there
+                    // be a time where auth is empty?
                 }
             }
         }
@@ -109,27 +152,37 @@ class LogInViewController: UIViewController {
     // Determines whether application keeps user session or not
     @IBAction func rememberMeSwitch(_ sender: UISwitch) {
         isRememberMeOn = sender.isOn
+        print("isUserSessionOn: \(isRememberMeOn!)")
     }
     
-    func getCurrentUser() {
-        // Create a state listener
-        handle = Auth.auth().addStateDidChangeListener() { (auth, user) in
-            // Check if user has a value
-            if let user = user {
-                if user == auth.currentUser {
-                    // Check if email is verified
-                    if !user.isEmailVerified {
-                        // Show message prompt
-                        print("Email not yet verified.")
-                    } else {
-                        // Push to Feed View
-                        self.performSegue(withIdentifier: "toFeedView", sender: nil)
-                    }
-                }
+    // Updates the rememberMe of a user
+    func updateUserSession(_ user: UserInfo) {
+        // Create a reference to user document
+        let userDocument = firestoredb.collection("users").document(user.uid)
+        
+        // Update rememberMe field in user document
+        userDocument.updateData([
+            "rememberMe": self.isRememberMeOn
+        ]) { (err) in
+            if let err = err {
+                // Show error in console
+                print("Error updating document: \(err.localizedDescription)")
+            } else {
+                // Show message on console
+                print("Document updated successfully.")
             }
-            else {
-                // Show message prompt
-                print("There's no current user!")
+        }
+    }
+    
+    // Sign out user and end his session
+    func signOutUser() {
+        // Just to be sure, check if there's a current user
+        if let user = Auth.auth().currentUser {
+            do {
+                try Auth.auth().signOut()
+                print("Signing out user \(user.uid)")
+            } catch let signOutError as NSError {
+                print("Error signing out: %@", signOutError)
             }
         }
     }
@@ -166,6 +219,31 @@ class LogInViewController: UIViewController {
             if self.view.frame.origin.y != 0 {
                 self.view.frame.origin.y += keyboardSize.height - 100
             }
+        }
+    }
+    
+    // Show activty inidicator
+    func showActivityIndicator() {
+        // Initialize activity indicator
+        activityIndicator = UIActivityIndicatorView()
+        
+        // Set properties
+        let viewMaxY = view.frame.maxY
+        let indicatorYPos = viewMaxY - 60
+        activityIndicator.center = CGPoint(x: self.view.center.x, y: indicatorYPos)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
+        // Display activity indicator
+        activityIndicator.startAnimating()
+    }
+    
+    // Stop activity indicator
+    func stopActivityIndicator() {
+        // Check first if activity indicator is empty
+        if let activityIndicator = self.activityIndicator {
+            activityIndicator.stopAnimating()
         }
     }
 }

@@ -18,7 +18,6 @@
 		7F91275E21661FF500042380 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F91275D21661FF500042380 /* ViewController.swift */; };
 		7F91276121661FF500042380 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F91275F21661FF500042380 /* Main.storyboard */; };
 		7F91276321661FF900042380 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F91276221661FF900042380 /* Assets.xcassets */; };
-		7F91276621661FF900042380 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F91276421661FF900042380 /* LaunchScreen.storyboard */; };
 		7F9127722166221000042380 /* HELR45W.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F91276F2166220F00042380 /* HELR45W.ttf */; };
 		7F9127732166221000042380 /* Hero Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7F9127702166221000042380 /* Hero Light.otf */; };
 		7F9127742166221000042380 /* Hero.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7F9127712166221000042380 /* Hero.otf */; };
@@ -133,7 +132,6 @@
 		7F91275D21661FF500042380 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7F91276021661FF500042380 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7F91276221661FF900042380 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		7F91276521661FF900042380 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F91276721661FF900042380 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F91276F2166220F00042380 /* HELR45W.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HELR45W.ttf; sourceTree = "<group>"; };
 		7F9127702166221000042380 /* Hero Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hero Light.otf"; sourceTree = "<group>"; };
@@ -292,7 +290,6 @@
 				7F91275D21661FF500042380 /* ViewController.swift */,
 				7F91275F21661FF500042380 /* Main.storyboard */,
 				7F91276221661FF900042380 /* Assets.xcassets */,
-				7F91276421661FF900042380 /* LaunchScreen.storyboard */,
 				7F91276721661FF900042380 /* Info.plist */,
 				7FE333C4217319B80086DD16 /* GoogleService-Info.plist */,
 			);
@@ -535,7 +532,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F91276621661FF900042380 /* LaunchScreen.storyboard in Resources */,
 				7FE03C1F21703DF80084C62E /* add-2.png in Resources */,
 				7FFB82A72167ADCC00ADB0A9 /* checked.png in Resources */,
 				7F91276321661FF900042380 /* Assets.xcassets in Resources */,
@@ -721,14 +717,6 @@
 				7F91276021661FF500042380 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		7F91276421661FF900042380 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7F91276521661FF900042380 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

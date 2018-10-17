@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="exJ-97-7hP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hyd-BG-18M">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -49,7 +49,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="email.png" translatesAutoresizingMaskIntoConstraints="NO" id="K0l-Fm-5Rm">
                                 <rect key="frame" x="67" y="307" width="31" height="28"/>
@@ -118,7 +118,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="909.60000000000002" y="-581.55922038980509"/>
+            <point key="canvasLocation" x="1759" y="-582"/>
         </scene>
         <!--Feed View Controller-->
         <scene sceneID="nJp-eu-ZDT">
@@ -135,7 +135,7 @@
                                 <color key="separatorColor" red="0.89608716960000001" green="0.12917160990000001" blue="0.1060229018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="feed" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PRQ-WW-ggZ">
-                                <rect key="frame" x="16" y="27" width="90" height="51"/>
+                                <rect key="frame" x="16" y="16" width="90" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="36"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -167,7 +167,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JCm-BE-Ph4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2724" y="-341.37931034482762"/>
+            <point key="canvasLocation" x="3663" y="-424"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="l4X-Eg-JFV">
@@ -231,7 +231,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="taa-Qv-3sh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3473" y="430"/>
+            <point key="canvasLocation" x="3473" y="347"/>
         </scene>
         <!--New Feels View Controller-->
         <scene sceneID="Hym-Tx-7kN">
@@ -293,7 +293,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0WA-Zw-4qf">
                                 <rect key="frame" x="37" y="260" width="51" height="50"/>
-                                <state key="normal" title="Button" image="051-embarrassed.png"/>
+                                <state key="normal" title="Button" image="051-happy-2.png"/>
                                 <connections>
                                     <action selector="chooseMood:" destination="w9a-na-vUK" eventType="touchUpInside" id="x0b-kM-LBp"/>
                                 </connections>
@@ -363,7 +363,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iRV-Za-nId" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3472.8000000000002" y="-341.37931034482762"/>
+            <point key="canvasLocation" x="4412" y="-424"/>
         </scene>
         <!--Create Account View Controller-->
         <scene sceneID="s3u-Pa-ecq">
@@ -432,7 +432,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Back" id="BDS-Fa-KIb">
                             <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="show" id="afi-q1-dwK"/>
+                                <segue destination="2Ww-nc-T1R" kind="show" id="afi-q1-dwK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -444,7 +444,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YMZ-IO-J2g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2724" y="-1411"/>
+            <point key="canvasLocation" x="3663" y="-1347"/>
         </scene>
         <!--Dumpsite Construction View Controller-->
         <scene sceneID="4T6-PZ-pDr">
@@ -482,7 +482,7 @@
                                     <color key="titleColor" red="0.99959999320000004" green="0.58378976579999997" blue="0.019685026259999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="QIf-iz-rSV"/>
+                                    <segue destination="2Ww-nc-T1R" kind="show" id="QIf-iz-rSV"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -495,7 +495,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9fn-4o-y8l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3473" y="-1411"/>
+            <point key="canvasLocation" x="4412" y="-1347"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ZEJ-WT-7v0">
@@ -511,25 +511,34 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UVv-tL-BTh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4230" y="-1411"/>
+            <point key="canvasLocation" x="5169" y="-1347"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="WrA-wx-ah6">
+        <!--Launch Screen View Controller-->
+        <scene sceneID="aDn-S7-4Ol">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="exJ-97-7hP" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="U6J-QE-1AT">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LBp-En-cug" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="hyd-BG-18M" customClass="LaunchScreenViewController" customModule="dumpsite" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lrP-dl-oMR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="garbage.png" translatesAutoresizingMaskIntoConstraints="NO" id="jly-75-PpJ">
+                                <rect key="frame" x="128" y="302" width="119" height="63"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.8960871696472168" green="0.12917160987854004" blue="0.1060229018330574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="0Xr-cn-Un1"/>
+                    </view>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="JZk-Du-GSQ"/>
+                        <segue destination="2Ww-nc-T1R" kind="show" identifier="toLogInView" id="3Hr-XG-3uM"/>
+                        <segue destination="te1-aS-xfS" kind="show" identifier="launchToCreateAccount" id="Oc5-YR-9hk"/>
+                        <segue destination="czD-uT-SYq" kind="show" identifier="launchToFeedView" id="V57-9e-ht3"/>
                     </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qzV-Qe-PBz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
             </objects>
-            <point key="canvasLocation" x="117.59999999999999" y="-580.65967016491754"/>
+            <point key="canvasLocation" x="71" y="-582"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JAu-rR-7uK">
@@ -547,7 +556,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4C6-jT-2gO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1785" y="-1411"/>
+            <point key="canvasLocation" x="2724" y="-1347"/>
         </scene>
         <!--Emoji View Controller-->
         <scene sceneID="ofv-4N-i4r">
@@ -571,7 +580,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z6d-z3-wvK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4074.4000000000001" y="-342.72863568215894"/>
+            <point key="canvasLocation" x="5014" y="-425"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hzq-Oz-vp5">
@@ -589,7 +598,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iTh-fr-ngj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1784.8" y="-341.37931034482762"/>
+            <point key="canvasLocation" x="2724" y="-425"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eKf-I2-Rd2">
@@ -607,19 +616,38 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pUR-C4-Ahw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2724" y="430"/>
+            <point key="canvasLocation" x="2724" y="347"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="UBi-oO-7xc">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2Ww-nc-T1R" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QrY-im-QvO">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="dju-2J-zbU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HpP-Ee-0zy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="909.60000000000002" y="-581.55922038980509"/>
         </scene>
     </scenes>
     <resources>
-        <image name="051-embarrassed.png" width="512" height="512"/>
+        <image name="051-happy-2.png" width="512" height="512"/>
         <image name="email.png" width="512" height="512"/>
         <image name="garbage.png" width="512" height="512"/>
         <image name="helmet.png" width="512" height="512"/>
         <image name="key-silhouette-security-tool-interface-symbol-of-password.png" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="FWm-wJ-yc0"/>
+        <segue reference="QIf-iz-rSV"/>
+        <segue reference="R6d-f8-VhW"/>
+        <segue reference="kf3-fE-klM"/>
         <segue reference="MnV-Af-w7g"/>
-        <segue reference="afi-q1-dwK"/>
     </inferredMetricsTieBreakers>
 </document>
