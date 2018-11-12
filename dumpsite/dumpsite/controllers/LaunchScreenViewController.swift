@@ -30,6 +30,8 @@ class LaunchScreenViewController: UIViewController {
     var numberOfPushes: Int = 0
     var activityIndicator: UIActivityIndicatorView!
     
+    // Data for Next Views
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

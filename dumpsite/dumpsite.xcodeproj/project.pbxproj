@@ -23,6 +23,12 @@
 		7F9127742166221000042380 /* Hero.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7F9127712166221000042380 /* Hero.otf */; };
 		7F91277D21662F0D00042380 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F91277C21662F0D00042380 /* CreateAccountViewController.swift */; };
 		7F9127852166440700042380 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9127842166440700042380 /* FeedViewController.swift */; };
+		7F9B5DB22198A0A00018E7F8 /* Pods_dumpsite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F809B0E5ACCB9378033AB3 /* Pods_dumpsite.framework */; };
+		7F9B5DB32198A0A00018E7F8 /* Pods_dumpsite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27F809B0E5ACCB9378033AB3 /* Pods_dumpsite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7F9B5DB62198B11D0018E7F8 /* Feels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B5DB52198B11D0018E7F8 /* Feels.swift */; };
+		7F9B5DB82198F4CF0018E7F8 /* FeelsStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B5DB72198F4CF0018E7F8 /* FeelsStack.swift */; };
+		7F9B5DBA2198FB4A0018E7F8 /* Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B5DB92198FB4A0018E7F8 /* Reactions.swift */; };
+		7F9B5DBC2198FB730018E7F8 /* React.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B5DBB2198FB730018E7F8 /* React.swift */; };
 		7FA1FA6721687EAF00C165AA /* ReactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1FA6521687EAF00C165AA /* ReactCell.swift */; };
 		7FA1FA6821687EAF00C165AA /* ReactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA1FA6621687EAF00C165AA /* ReactCell.xib */; };
 		7FE03C122170241F0084C62E /* TrashcanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE03C102170241F0084C62E /* TrashcanCell.swift */; };
@@ -114,6 +120,20 @@
 		7FFCCCD721764D6E00F12215 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFCCCD621764D6E00F12215 /* LaunchScreenViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7F9B5DB42198A0A00018E7F8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7F9B5DB32198A0A00018E7F8 /* Pods_dumpsite.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		27F809B0E5ACCB9378033AB3 /* Pods_dumpsite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dumpsite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		433372B985C6F596DA485867 /* Pods-dumpsite.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dumpsite.debug.xcconfig"; path = "Pods/Target Support Files/Pods-dumpsite/Pods-dumpsite.debug.xcconfig"; sourceTree = "<group>"; };
@@ -138,6 +158,10 @@
 		7F9127712166221000042380 /* Hero.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hero.otf; sourceTree = "<group>"; };
 		7F91277C21662F0D00042380 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		7F9127842166440700042380 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		7F9B5DB52198B11D0018E7F8 /* Feels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feels.swift; sourceTree = "<group>"; };
+		7F9B5DB72198F4CF0018E7F8 /* FeelsStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeelsStack.swift; sourceTree = "<group>"; };
+		7F9B5DB92198FB4A0018E7F8 /* Reactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reactions.swift; sourceTree = "<group>"; };
+		7F9B5DBB2198FB730018E7F8 /* React.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = React.swift; sourceTree = "<group>"; };
 		7FA1FA6521687EAF00C165AA /* ReactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactCell.swift; sourceTree = "<group>"; };
 		7FA1FA6621687EAF00C165AA /* ReactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactCell.xib; sourceTree = "<group>"; };
 		7FE03C102170241F0084C62E /* TrashcanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashcanCell.swift; sourceTree = "<group>"; };
@@ -235,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				390010DF30C3D90312A76786 /* Pods_dumpsite.framework in Frameworks */,
+				7F9B5DB22198A0A00018E7F8 /* Pods_dumpsite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +354,10 @@
 			children = (
 				7FE333C02172FA930086DD16 /* User.swift */,
 				7FE333C22172FB620086DD16 /* UserReact.swift */,
+				7F9B5DB52198B11D0018E7F8 /* Feels.swift */,
+				7F9B5DB72198F4CF0018E7F8 /* FeelsStack.swift */,
+				7F9B5DB92198FB4A0018E7F8 /* Reactions.swift */,
+				7F9B5DBB2198FB730018E7F8 /* React.swift */,
 			);
 			path = structs;
 			sourceTree = "<group>";
@@ -483,6 +512,7 @@
 				7F91275521661FF500042380 /* Frameworks */,
 				7F91275621661FF500042380 /* Resources */,
 				270C6382505F727BA0D7366D /* [CP] Embed Pods Frameworks */,
+				7F9B5DB42198A0A00018E7F8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -687,22 +717,26 @@
 			files = (
 				7F5B3268216A704A0044951C /* MoodDelegate.swift in Sources */,
 				7F5B32632169FD370044951C /* EmojiViewController.swift in Sources */,
+				7F9B5DB82198F4CF0018E7F8 /* FeelsStack.swift in Sources */,
 				7FEE043A2175B251005004D5 /* LogInViewController.swift in Sources */,
 				7F91277D21662F0D00042380 /* CreateAccountViewController.swift in Sources */,
 				7FE03C122170241F0084C62E /* TrashcanCell.swift in Sources */,
 				7FA1FA6721687EAF00C165AA /* ReactCell.swift in Sources */,
+				7F9B5DBA2198FB4A0018E7F8 /* Reactions.swift in Sources */,
 				7FEE0436217596EE005004D5 /* DumpsiteConstructionViewController.swift in Sources */,
 				7FE03C16217024390084C62E /* AddTrashcanCell.swift in Sources */,
 				7FF6E43A217259DF00BC5118 /* TrashcanContentViewController.swift in Sources */,
 				7FFB83152167CE2700ADB0A9 /* FeelsTextView.swift in Sources */,
 				7FE333C32172FB620086DD16 /* UserReact.swift in Sources */,
 				7FE333C12172FA930086DD16 /* User.swift in Sources */,
+				7F9B5DB62198B11D0018E7F8 /* Feels.swift in Sources */,
 				7F91275E21661FF500042380 /* ViewController.swift in Sources */,
 				7FFB83172167DBC300ADB0A9 /* NewFeelsViewController.swift in Sources */,
 				7F9127852166440700042380 /* FeedViewController.swift in Sources */,
 				7FE03C1D217029890084C62E /* ProfileViewController.swift in Sources */,
 				7FFB83112167AE3B00ADB0A9 /* FeelsCell.swift in Sources */,
 				7F91275C21661FF500042380 /* AppDelegate.swift in Sources */,
+				7F9B5DBC2198FB730018E7F8 /* React.swift in Sources */,
 				7FFCCCD721764D6E00F12215 /* LaunchScreenViewController.swift in Sources */,
 				7FEE043C2175F4C5005004D5 /* CustomSwitch.swift in Sources */,
 			);

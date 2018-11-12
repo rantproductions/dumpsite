@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Firebase
 
-class NewFeelsViewController: UIViewController {
+class NewFeelsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     // Tag Views
     @IBOutlet var moodFrame: UIImageView!
@@ -17,15 +18,36 @@ class NewFeelsViewController: UIViewController {
     @IBOutlet var feelsContent: FeelsTextView!
     @IBOutlet var btnDump: UIButton!
     
+    @IBOutlet var btnChooseTrashcan: UIButton!
+    @IBOutlet var trashcanName: UILabel!
+    @IBOutlet var trashcanPicker: UIPickerView!
+    
     @IBOutlet var emojiScroll: UIView!
     @IBOutlet var btnMood: UIButton!
+    
+    // References
+    var firestoredb: Firestore!
     
     // Data
     var feelsContentHeight = CGFloat()
     var emojiViewController: EmojiViewController?
+    var chosenEmoji = String()
+    
+    // Temporary
+    var trashcanList = ["Mixed Emotions"]
+    var trashcanCount = Int()
     
     // Flags
-    var isEmojiViewOpened : Bool = false
+    var isEmojiViewOpened: Bool = false
+    var isTrashcanPickerOpened: Bool = false
+    
+    // Inherited Functions
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Get firestore reference
+        getFirestoreDatabase()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +61,9 @@ class NewFeelsViewController: UIViewController {
         // Make corners of views round
         makeCornersRound()
         
+        // Set up trashcan picker view
+        setUpTrashcanPicker()
+        
         // Set up text view
         setUpFeelsContent()
         
@@ -47,6 +72,22 @@ class NewFeelsViewController: UIViewController {
         
         getChildControllers()
         emojiViewController?.moodDelegate = self
+        
+        // Miscs
+        handleTap()
+        moveViewWithKeyboard()
+    }
+    
+    // Gets firstore reference and fixes date bug
+    func getFirestoreDatabase() {
+        // Get reference to Dumpsite's Firestore Database
+        firestoredb = Firestore.firestore()
+        
+        // Avoid breaking the app cause by the change of behavior
+        // of system Date objects
+        let settings = firestoredb.settings
+        settings.areTimestampsInSnapshotsEnabled = true
+        firestoredb.settings = settings
     }
     
     func makeNavigationBarTransparent() {
@@ -71,6 +112,32 @@ class NewFeelsViewController: UIViewController {
         charCountSign.clipsToBounds = true
         emojiScroll.layer.cornerRadius = 15
         emojiScroll.clipsToBounds = true
+        btnChooseTrashcan.layer.cornerRadius = 12
+        btnChooseTrashcan.clipsToBounds = true
+    }
+    
+    func setUpTrashcanPicker() {
+        self.trashcanPicker.delegate = self
+        self.trashcanPicker.dataSource = self
+        
+        trashcanPicker.alpha = 0
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return trashcanCount
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return trashcanList[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        // Change button name to trashcan name
+        trashcanName.text = trashcanList[row]
     }
     
     func setUpFeelsContent() {
@@ -109,24 +176,124 @@ class NewFeelsViewController: UIViewController {
     }
     
     @IBAction func dumpFeels(_ sender: UIButton) {
-        
+        // Check if feelsContent is empty
+        if let content = feelsContent.text {
+            // Get trashcan name
+            var trashcanName = self.trashcanName.text
+            
+            // If user didn't picked a trashcan, set it
+            // to default "Mixed Emotions"
+            if trashcanName == "Choose Trashcan" {
+                trashcanName = "Mixed Emotions"
+            }
+            
+            // Get current user's id
+            let userId = Auth.auth().currentUser?.uid
+            
+            // Create new Feels
+            let feels = Feels(userId: userId!, trashcan: trashcanName!, moodImage: chosenEmoji, content: content, timestamp: Timestamp.init())
+            
+            var feelsRef: DocumentReference? = nil
+            feelsRef = self.firestoredb.collection("feels").addDocument(data: feels.dictionary) { err in
+                if let err = err {
+                    print("Error dumping! \(err.localizedDescription)")
+                } else {
+                    print("Your feels have been dumped! \(feelsRef!.documentID)")
+                }
+            }
+            
+            // Create reactions
+            var reactNames = ["Happy", "Tease", "Crying", "Bored", "Angry"]
+            let reactions: [String: Any] = [
+                "react1": [
+                    "reactName": reactNames[0],
+                    "reactCount": 0,
+                    "userIdList": [String]()
+                ],
+                "react2": [
+                    "reactName": reactNames[1],
+                    "reactCount": 0,
+                    "userIdList": [String]()
+                ],
+                "react3": [
+                    "reactName": reactNames[2],
+                    "reactCount": 0,
+                    "userIdList": [String]()
+                ],
+                "react4": [
+                    "reactName": reactNames[3],
+                    "reactCount": 0,
+                    "userIdList": [String]()
+                ],
+                "react5": [
+                    "reactName": reactNames[4],
+                    "reactCount": 0,
+                    "userIdList": [String]()
+                ],
+            ]
+            
+            self.firestoredb.collection("reactions").document(feelsRef!.documentID).setData(reactions, merge: true) { err in
+                if let err = err {
+                    print("Error adding reactions to feels! \(err.localizedDescription)")
+                } else {
+                    print("Successfully added reactions to \(feelsRef!.documentID) feels!")
+                }
+            }
+            
+            // Push to feed view
+            self.performSegue(withIdentifier: "afterDump", sender: nil)
+        }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func chooseTrashcan(_ sender: UIButton) {
+        if isTrashcanPickerOpened {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.trashcanPicker.alpha = 0
+                })
+            isTrashcanPickerOpened = false
+        } else {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.trashcanPicker.alpha = 1
+            })
+            isTrashcanPickerOpened = true
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Miscs
+    // Dismiss keyboard when users tap anywhere
+    func handleTap() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.numberOfTapsRequired = 1
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
-    */
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    // Push view up when keyboard is obscuring textfield
+    func moveViewWithKeyboard() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height - 100
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0 {
+                self.view.frame.origin.y += keyboardSize.height - 100
+            }
+        }
+    }
 
 }
 
@@ -185,6 +352,7 @@ extension NewFeelsViewController: UITextViewDelegate {
 
 extension NewFeelsViewController: MoodDelegate {
     func changeMoodImage(chosenEmoji: String) {
+        self.chosenEmoji = chosenEmoji
         let btnImage = UIImage(named: chosenEmoji) as UIImage?
         btnMood.setImage(btnImage, for: .normal)
         print("Changing to \(chosenEmoji)")

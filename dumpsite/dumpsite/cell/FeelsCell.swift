@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class FeelsCell: UITableViewCell {
 
@@ -14,7 +15,11 @@ class FeelsCell: UITableViewCell {
     @IBOutlet var moodFrame: UIImageView!
     @IBOutlet var moodImage: UIImageView!
     @IBOutlet var feelsContent: FeelsTextView!
-    @IBOutlet var btnShowReacts: UIButton!
+    
+    // Data
+    var userId = String()
+    var trashcan = String()
+    var timestamp = Timestamp()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,22 +27,19 @@ class FeelsCell: UITableViewCell {
         // Round corners of View
         moodFrame.layer.cornerRadius = 15
         moodFrame.clipsToBounds = true
-        btnShowReacts.layer.cornerRadius = 8
-        btnShowReacts.clipsToBounds = true
         feelsContent.layer.cornerRadius = 8
         feelsContent.clipsToBounds = true
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
-    }
     
     // Call this in Feed View Controller to assign values
-    func commonInit(_ moodName: String) {
-        // Set the image of the Mood
+    func commonInit(_ moodName: String, _ content: String, _ userId: String, _ trashcan: String, _ timestamp: Timestamp) {
+
         moodImage.image = UIImage(named: moodName)
+        feelsContent.text = content
+        
+        self.userId = userId
+        self.trashcan = trashcan
+        self.timestamp = timestamp
     }
     
 }

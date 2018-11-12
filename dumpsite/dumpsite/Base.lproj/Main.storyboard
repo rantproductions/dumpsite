@@ -157,7 +157,8 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="RRC-a6-dsz">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="w9a-na-vUK" kind="show" id="D7f-bK-h6a"/>
+                                <action selector="createFeels:" destination="jrl-DB-vKa" id="c2Q-kB-CZS"/>
+                                <segue destination="w9a-na-vUK" kind="show" identifier="newFeels" id="D7f-bK-h6a"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -167,7 +168,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JCm-BE-Ph4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3663" y="-424"/>
+            <point key="canvasLocation" x="3661.5999999999999" y="-424.13793103448279"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="l4X-Eg-JFV">
@@ -279,18 +280,6 @@
                                 <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y4H-NI-5AO">
-                                <rect key="frame" x="220" y="408" width="113" height="34"/>
-                                <color key="backgroundColor" red="0.99959999320000004" green="0.58378976579999997" blue="0.019685026259999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Dump!">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="dumpFeels:" destination="w9a-na-vUK" eventType="touchUpInside" id="u7m-RP-eH8"/>
-                                    <segue destination="5Yy-IZ-iLS" kind="show" id="P6X-jZ-WCn"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0WA-Zw-4qf">
                                 <rect key="frame" x="37" y="260" width="51" height="50"/>
                                 <state key="normal" title="Button" image="051-happy-2.png"/>
@@ -316,33 +305,78 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y4H-NI-5AO">
+                                <rect key="frame" x="236" y="409" width="113" height="34"/>
+                                <color key="backgroundColor" red="0.99959999320000004" green="0.58378976579999997" blue="0.019685026259999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Dump!">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="dumpFeels:" destination="w9a-na-vUK" eventType="touchUpInside" id="u7m-RP-eH8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iOE-ql-l2a">
+                                <rect key="frame" x="26" y="84" width="195" height="47"/>
+                                <color key="backgroundColor" red="0.99959999320000004" green="0.58378976579999997" blue="0.019685026259999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="imageEdgeInsets" minX="10" minY="10" maxX="155" maxY="10"/>
+                                <state key="normal" image="garbage.png">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="chooseTrashcan:" destination="w9a-na-vUK" eventType="touchUpInside" id="Yfa-gt-Mxy"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Choose Trashcan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NLv-9f-pe2">
+                                <rect key="frame" x="76" y="97" width="127" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <pickerView alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sos-sQ-Boe">
+                                <rect key="frame" x="0.0" y="490" width="375" height="177"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="177" id="8c8-e7-SpA"/>
+                                </constraints>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="0.89608716960000001" green="0.12917160990000001" blue="0.1060229018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.89608716960000001" green="0.12917160990000001" blue="0.1060229018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Sos-sQ-Boe" firstAttribute="leading" secondItem="skP-i7-2xh" secondAttribute="leading" id="2iY-0p-pch"/>
                             <constraint firstItem="b1f-K9-5KP" firstAttribute="leading" secondItem="oHs-7c-a0B" secondAttribute="trailing" constant="43" id="3WM-kd-zSZ"/>
                             <constraint firstItem="1vy-qH-e7e" firstAttribute="leading" secondItem="08k-3P-kgS" secondAttribute="leading" id="4q7-WH-Uyt"/>
-                            <constraint firstItem="Db6-8I-Kqe" firstAttribute="trailing" secondItem="Y4H-NI-5AO" secondAttribute="trailing" constant="42" id="7vW-Bu-3M2"/>
+                            <constraint firstItem="Db6-8I-Kqe" firstAttribute="trailing" secondItem="Y4H-NI-5AO" secondAttribute="trailing" constant="26" id="7vW-Bu-3M2"/>
                             <constraint firstItem="1vy-qH-e7e" firstAttribute="trailing" secondItem="08k-3P-kgS" secondAttribute="trailing" id="8l2-b2-qJB"/>
-                            <constraint firstItem="Y4H-NI-5AO" firstAttribute="leading" secondItem="Db6-8I-Kqe" secondAttribute="leading" constant="220" id="8tt-eb-bnE"/>
+                            <constraint firstItem="Y4H-NI-5AO" firstAttribute="leading" secondItem="Db6-8I-Kqe" secondAttribute="leading" constant="236" id="8tt-eb-bnE"/>
+                            <constraint firstAttribute="trailing" secondItem="Sos-sQ-Boe" secondAttribute="trailing" id="AYP-gD-JXv"/>
                             <constraint firstItem="0WA-Zw-4qf" firstAttribute="centerX" secondItem="08k-3P-kgS" secondAttribute="centerX" id="DX0-iO-Ont"/>
                             <constraint firstItem="Db6-8I-Kqe" firstAttribute="trailing" secondItem="b1f-K9-5KP" secondAttribute="trailing" constant="16" id="Da1-Wr-oRZ"/>
                             <constraint firstItem="4Ry-6d-g6a" firstAttribute="trailing" secondItem="b1f-K9-5KP" secondAttribute="trailing" constant="-10" id="Dfr-US-x2g"/>
-                            <constraint firstItem="Y4H-NI-5AO" firstAttribute="top" secondItem="4Ry-6d-g6a" secondAttribute="bottom" constant="15" id="Dvb-YA-aHz"/>
+                            <constraint firstItem="Y4H-NI-5AO" firstAttribute="top" secondItem="4Ry-6d-g6a" secondAttribute="bottom" constant="16" id="Dvb-YA-aHz"/>
+                            <constraint firstItem="iOE-ql-l2a" firstAttribute="leading" secondItem="oHs-7c-a0B" secondAttribute="leading" id="LyM-ue-duR"/>
                             <constraint firstItem="4Ry-6d-g6a" firstAttribute="top" secondItem="08k-3P-kgS" secondAttribute="top" id="RZT-UD-sa0"/>
                             <constraint firstItem="0WA-Zw-4qf" firstAttribute="centerY" secondItem="08k-3P-kgS" secondAttribute="centerY" id="SYu-px-JAM"/>
                             <constraint firstItem="0WA-Zw-4qf" firstAttribute="leading" secondItem="Db6-8I-Kqe" secondAttribute="leading" constant="37" id="U9F-JN-Bqn"/>
                             <constraint firstItem="b1f-K9-5KP" firstAttribute="top" secondItem="Db6-8I-Kqe" secondAttribute="top" constant="60" id="UFY-58-WBq"/>
+                            <constraint firstItem="iOE-ql-l2a" firstAttribute="centerY" secondItem="NLv-9f-pe2" secondAttribute="centerY" id="W0t-ni-fcf"/>
+                            <constraint firstItem="Sos-sQ-Boe" firstAttribute="bottom" secondItem="Db6-8I-Kqe" secondAttribute="bottom" id="XMV-Ic-fKz"/>
+                            <constraint firstItem="iOE-ql-l2a" firstAttribute="top" secondItem="Db6-8I-Kqe" secondAttribute="top" constant="20" id="cpC-G3-6b2"/>
                             <constraint firstItem="1vy-qH-e7e" firstAttribute="top" secondItem="08k-3P-kgS" secondAttribute="bottom" constant="29" id="dB0-Kh-aVv"/>
                             <constraint firstItem="gm4-6j-GbZ" firstAttribute="top" secondItem="Db6-8I-Kqe" secondAttribute="top" constant="126" id="dTj-Hb-skg"/>
                             <constraint firstItem="4Ry-6d-g6a" firstAttribute="leading" secondItem="08k-3P-kgS" secondAttribute="trailing" constant="18" id="fI9-tr-5jA"/>
+                            <constraint firstItem="oHs-7c-a0B" firstAttribute="top" secondItem="iOE-ql-l2a" secondAttribute="bottom" constant="8" symbolic="YES" id="o0g-3j-qAd"/>
                             <constraint firstItem="oHs-7c-a0B" firstAttribute="top" secondItem="Db6-8I-Kqe" secondAttribute="top" constant="75" id="pxR-Fp-tV5"/>
                             <constraint firstItem="08k-3P-kgS" firstAttribute="leading" secondItem="Db6-8I-Kqe" secondAttribute="leading" constant="26" id="qnw-Bq-uvb"/>
                             <constraint firstItem="Db6-8I-Kqe" firstAttribute="bottom" secondItem="1vy-qH-e7e" secondAttribute="bottom" constant="37" id="qrg-VY-g6J"/>
+                            <constraint firstItem="NLv-9f-pe2" firstAttribute="leading" secondItem="Db6-8I-Kqe" secondAttribute="leading" constant="76" id="qzK-iO-Drg"/>
                             <constraint firstItem="0WA-Zw-4qf" firstAttribute="top" secondItem="08k-3P-kgS" secondAttribute="bottom" constant="-59" id="sXW-fb-L6Y"/>
+                            <constraint firstItem="NLv-9f-pe2" firstAttribute="top" secondItem="Db6-8I-Kqe" secondAttribute="top" constant="33" id="sfE-Lf-ieq"/>
                             <constraint firstItem="0WA-Zw-4qf" firstAttribute="top" secondItem="oHs-7c-a0B" secondAttribute="bottom" constant="35" id="tVK-pq-uTz"/>
                             <constraint firstItem="gm4-6j-GbZ" firstAttribute="centerX" secondItem="b1f-K9-5KP" secondAttribute="centerX" constant="-0.5" id="uUG-JE-un6"/>
                             <constraint firstItem="oHs-7c-a0B" firstAttribute="leading" secondItem="08k-3P-kgS" secondAttribute="leading" id="umT-ig-hCs"/>
+                            <constraint firstItem="b1f-K9-5KP" firstAttribute="leading" secondItem="iOE-ql-l2a" secondAttribute="trailing" constant="8" symbolic="YES" id="zjb-Ea-D6K"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Db6-8I-Kqe"/>
                     </view>
@@ -352,6 +386,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="btnChooseTrashcan" destination="iOE-ql-l2a" id="xRw-lm-MOl"/>
                         <outlet property="btnDump" destination="Y4H-NI-5AO" id="zTG-fZ-xqg"/>
                         <outlet property="btnMood" destination="0WA-Zw-4qf" id="kZf-J0-Tzl"/>
                         <outlet property="charCountLabel" destination="b1f-K9-5KP" id="eIf-Du-CKm"/>
@@ -359,11 +394,14 @@
                         <outlet property="emojiScroll" destination="1vy-qH-e7e" id="P4Z-OR-r27"/>
                         <outlet property="feelsContent" destination="4Ry-6d-g6a" id="2X4-Rn-mG2"/>
                         <outlet property="moodFrame" destination="08k-3P-kgS" id="G50-0m-NqQ"/>
+                        <outlet property="trashcanName" destination="NLv-9f-pe2" id="olR-hy-ast"/>
+                        <outlet property="trashcanPicker" destination="Sos-sQ-Boe" id="tca-kS-s2m"/>
+                        <segue destination="jrl-DB-vKa" kind="show" identifier="afterDump" id="0OQ-x3-3Ln"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iRV-Za-nId" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4412" y="-424"/>
+            <point key="canvasLocation" x="4412" y="-424.13793103448279"/>
         </scene>
         <!--Create Account View Controller-->
         <scene sceneID="s3u-Pa-ecq">
@@ -516,7 +554,6 @@
         <!--Launch Screen View Controller-->
         <scene sceneID="aDn-S7-4Ol">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LBp-En-cug" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="hyd-BG-18M" customClass="LaunchScreenViewController" customModule="dumpsite" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lrP-dl-oMR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -537,6 +574,7 @@
                         <segue destination="czD-uT-SYq" kind="show" identifier="launchToFeedView" id="V57-9e-ht3"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LBp-En-cug" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="71" y="-582"/>
         </scene>
