@@ -58,6 +58,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.navigationItem.hidesBackButton = true
     }
     
+    func dynamicCellSize() {
+        
+    }
+    
     func registerNibs() {
         let addTrashcanCell = UINib(nibName: "AddTrashcanCell", bundle: nil)
         let trashcanCell = UINib(nibName: "TrashcanCell", bundle: nil)

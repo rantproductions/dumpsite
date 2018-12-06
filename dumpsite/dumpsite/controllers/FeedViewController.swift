@@ -13,18 +13,21 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // Tag Views
     @IBOutlet var feedView: UITableView!
+    @IBOutlet var noFeelsLabel: UILabel!
     
     // Feed View Data
+    var listenToFeels: Bool = true
     var reactNibOpen = [Bool]()
     var feelsArray = [Feels]()
-    var reactionsArray = [String: React]()
+    var feelsIds = [String]()
+    var reactionsArray = [Reactions]()
     
-    var feelsStack = FeelsStack()
+    var currentReact: Int!
     
     // Data for NewFeelsViewController
     var trashcanCount = Int()
     var trashcanList = [String]()
-    
+
     // Firebase References
     var firestoredb: Firestore!
     
@@ -35,14 +38,18 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         getFirestoreDatabase()
         
         getTrashcanList()
-        // loadFeels()
         checkForUpdates()
+        // loadReacts()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        listenToFeels = false
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         
         // Set the Navigation Bar to transparent
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -53,6 +60,9 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.navigationItem.leftItemsSupplementBackButton = false
         self.navigationItem.hidesBackButton = true
         
+        // Show tab bar
+        self.tabBarController?.tabBar.isHidden = false
+        
         // Set up Feed View's data source and delegate
         feedView.dataSource = self
         feedView.delegate = self
@@ -62,7 +72,9 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         feedView.contentInset = feedViewInsets
         
         // Fix table cell expand glitch
-        feedView.estimatedRowHeight = 0
+        feedView.rowHeight = UITableView.automaticDimension
+        feedView.estimatedRowHeight = 160
+        
         feedView.estimatedSectionHeaderHeight = 0
         feedView.estimatedSectionFooterHeight = 0
         
@@ -95,19 +107,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             } else {
                 // Check if there's no Feels
                 if let querySnapshot = querySnapshot {
-                    for document in querySnapshot.documents {
-                        print("Feels ID: \(document.documentID)")
-                        
-                        let userId = document.data()["userId"] as! String
-                        let trashcan = document.data()["trashcan"] as! String
-                        let timestamp = document.data()["timestamp"] as! Timestamp
-                        let moodImage = document.data()["moodImage"] as! String
-                        let content = document.data()["content"] as! String
-                        
-                        let feels = Feels(userId: userId, trashcan: trashcan, moodImage: moodImage, content: content, timestamp: timestamp)
-                        self.feelsArray.append(feels)
+                    self.noFeelsLabel.isHidden = true
+                    self.feelsArray = querySnapshot.documents.compactMap({document in Feels(dictionary: document.data())})
+                    for _ in 0..<querySnapshot.count {
                         self.reactNibOpen.append(false)
                     }
+                    
+                } else {
+                    self.noFeelsLabel.isHidden = false
                 }
                 
                 // Reload feed view
@@ -119,51 +126,85 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    func loadReacts() {
+        firestoredb.collection("reactions").order(by: "timestamp", descending: true)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error fetching reacts! \(err.localizedDescription)")
+                } else {
+                    if let querySnapshot = querySnapshot {
+                        self.reactionsArray = querySnapshot.documents.compactMap({document in Reactions(dictionary: document.data())})
+                    } else {
+                        print("Reactions not fetched.")
+                    }
+                }
+        }
+    }
+    
     func checkForUpdates() {
-        firestoredb.collection("feels").order(by: "timestamp", descending: true)
+        let feelsListener = firestoredb.collection("feels").order(by: "timestamp", descending: true)
             .addSnapshotListener() { (querySnapshot, err) in
                 guard let querySnapshot = querySnapshot else { return }
                 querySnapshot.documentChanges.forEach { diff in
-                    // New Dump
                     if diff.type == .added {
+                        self.feelsIds.append(diff.document.documentID)
                         self.feelsArray.append(Feels(dictionary: diff.document.data())!)
-                        // self.feelsStack.push(Feels(dictionary: diff.document.data())!)
                         self.reactNibOpen.append(false)
-                        
-                        DispatchQueue.main.async {
-                            self.feedView.reloadData()
-                        }
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.feedView.reloadData()
                     }
                 }
+        }
+        
+        let reactsListener = firestoredb.collection("reactions").order(by: "timestamp", descending: true)
+            .addSnapshotListener() { (querySnapshot, err) in
+                guard let querySnapshot = querySnapshot else { return }
+                
+                querySnapshot.documentChanges.forEach { diff in
+                    if diff.type == .modified {
+                        self.reactionsArray[self.currentReact] = Reactions(dictionary: diff.document.data())!
+                    } else if diff.type == .added {
+                        self.reactionsArray.append(Reactions(dictionary: diff.document.data())!)
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    self.feedView.reloadData()
+                }
+        }
+        
+        if !listenToFeels {
+            feelsListener.remove()
+            reactsListener.remove()
         }
     }
     
     // Returns number of Feel Cells
     func numberOfSections(in tableView: UITableView) -> Int {
         return feelsArray.count
-        // return feelsStack.count()
     }
     
     // Returns the number of rows under each Feel Cells
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // if react is open, return the feelsCell and reactCell
-        if reactNibOpen[section] == false {
+        if reactNibOpen[section] == false { // else return the feelsCell only
             return 1
         }
-        else { // else return the feelsCell only
+        else { // if react is open, return the feelsCell and reactCell
             return 2
         }
     }
     
     // Returns height of each cell in a row
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    /*func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 { // if feelsCell
-            return 150
+            return 0
         }
         else { // if reactCell
             return 90
         }
-    }
+    }*/
     
     // Return the cell to use for each row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -171,7 +212,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         if indexPath.row == 0 {
             let cell = feedView.dequeueReusableCell(withIdentifier: "feelsCell") as! FeelsCell
             let feels = feelsArray[indexPath.section]
-            // let feels = feelsStack.pop()
             cell.commonInit(feels.moodImage, feels.content, feels.userId, feels.trashcan, feels.timestamp)
             
             // Make background of custom cell transparent
@@ -182,6 +222,38 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             // the rest of the cells under the feelsCell
             let cell = feedView.dequeueReusableCell(withIdentifier: "reactCell") as! ReactCell
+            currentReact = indexPath.section
+            
+            let feelsReaction = reactionsArray[indexPath.section]
+            var reactCount = [String: Int]()
+            var userIdList = [String: [String]]()
+            
+            for react in feelsReaction.reactions {
+                let value = react.value as! [String: Any]
+                
+                var reactName = String()
+                var count = Int()
+                var idList = [String]()
+                
+                for reactData in value {
+                    if(reactData.key == "reactCount") {
+                        count = reactData.value as! Int
+                    }
+                    
+                    if(reactData.key == "reactName") {
+                        reactName = reactData.value as! String
+                    }
+                    
+                    if(reactData.key == "userIdList") {
+                        idList = reactData.value as! [String]
+                    }
+                    
+                    reactCount.updateValue(count, forKey: reactName)
+                    userIdList.updateValue(idList, forKey: reactName)
+                }
+            }
+            
+            cell.commonInit(feelsReaction.feelsId, reactCount, userIdList, feelsReaction.timestamp)
             
             // Make background of custom cell transparent
             cell.backgroundColor = .clear
@@ -202,6 +274,16 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             reactNibOpen[indexPath.section] = true
             let section = IndexSet.init(integer: indexPath.section)
             feedView.reloadSections(section, with: .none)
+        }
+        
+        for i in 0..<reactNibOpen.count {
+            if i != indexPath.section {
+                if reactNibOpen[i] == true {
+                    reactNibOpen[i] = false
+                    let section = IndexSet.init(integer: i)
+                    feedView.reloadSections(section, with: .fade)
+                }
+            }
         }
     }
     

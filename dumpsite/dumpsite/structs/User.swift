@@ -18,6 +18,7 @@ struct User {
     var email: String
     var password: String
     var rememberMe: Bool
+    var feelsCount: Int
     var trashcanCount: Int
     var trashcans = [String]()
     
@@ -27,6 +28,7 @@ struct User {
             "email": email,
             "password": password,
             "rememberMe": rememberMe,
+            "feelsCount": feelsCount,
             "trashcanCount": trashcanCount,
             "trashcans": trashcans
         ]
@@ -39,9 +41,10 @@ extension User: UserSerializable {
             let email = dictionary["email"] as? String,
             let password = dictionary["password"] as? String,
             let rememberMe = dictionary["rememberMe"] as? Bool,
+            let feelsCount = dictionary["feelsCount"] as? Int,
             let trashcanCount = dictionary["trashcanCount"] as? Int,
             let trashcans = dictionary["trashcans"] as? [String] else { return nil }
         
-        self.init(userId: userId, email: email, password: password, rememberMe: rememberMe, trashcanCount: trashcanCount, trashcans: trashcans)
+        self.init(userId: userId, email: email, password: password, rememberMe: rememberMe, feelsCount: feelsCount, trashcanCount: trashcanCount, trashcans: trashcans)
     }
 }

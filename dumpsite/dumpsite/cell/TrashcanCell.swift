@@ -13,7 +13,7 @@ class TrashcanCell: UICollectionViewCell {
     // Tag Views
     @IBOutlet var trashcanBorder: UIImageView!
     @IBOutlet weak var btnDelete: UIImageView!
-    
+    @IBOutlet var trashcanName: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

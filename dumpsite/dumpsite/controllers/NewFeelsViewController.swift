@@ -74,6 +74,7 @@ class NewFeelsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         emojiViewController?.moodDelegate = self
         
         // Miscs
+        self.tabBarController?.tabBar.isHidden = true
         handleTap()
         moveViewWithKeyboard()
     }
@@ -204,39 +205,18 @@ class NewFeelsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             
             // Create reactions
             var reactNames = ["Happy", "Tease", "Crying", "Bored", "Angry"]
-            let reactions: [String: Any] = [
-                "react1": [
-                    "reactName": reactNames[0],
-                    "reactCount": 0,
-                    "userIdList": [String]()
-                ],
-                "react2": [
-                    "reactName": reactNames[1],
-                    "reactCount": 0,
-                    "userIdList": [String]()
-                ],
-                "react3": [
-                    "reactName": reactNames[2],
-                    "reactCount": 0,
-                    "userIdList": [String]()
-                ],
-                "react4": [
-                    "reactName": reactNames[3],
-                    "reactCount": 0,
-                    "userIdList": [String]()
-                ],
-                "react5": [
-                    "reactName": reactNames[4],
-                    "reactCount": 0,
-                    "userIdList": [String]()
-                ],
-            ]
+            var reactArray = [String: Any]()
+            for i in 0..<reactNames.count {
+                let react = React(reactName: reactNames[i], reactCount: 0, userIdList: [String]())
+                reactArray.updateValue(react.dictionary, forKey: "react\(i)")
+            }
             
-            self.firestoredb.collection("reactions").document(feelsRef!.documentID).setData(reactions, merge: true) { err in
+            let reactions = Reactions(feelsId: feelsRef!.documentID, reactions: reactArray, timestamp: Timestamp.init())
+            self.firestoredb.collection("reactions").document(feelsRef!.documentID).setData(reactions.dictionary, merge: true) { err in
                 if let err = err {
                     print("Error adding reactions to feels! \(err.localizedDescription)")
                 } else {
-                    print("Successfully added reactions to \(feelsRef!.documentID) feels!")
+                    print("Successfully added reactions for \(feelsRef!.documentID) feels!")
                 }
             }
             

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 protocol ReactSerializable {
     init?(dictionary: [String: Any])
