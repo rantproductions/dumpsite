@@ -7,23 +7,36 @@
 //
 
 import UIKit
+import Firebase
+import AudioToolbox
 
-class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate {
+class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate {
 
+    // Firestore References
+    var firestoredb: Firestore!
+    
     // Tag Views
     @IBOutlet var trashcanCollection: UICollectionView!
     
-    // Temporary Data
-    var count = 1
+    // Data
+    var currentUserData: User!
+    var feelsCount = Int()
+    var trashcanCount = Int()
+    var trashcanList = [String]()
     
     // Deleting Trashcan
     var isInDeleteMode = false
     var isCellAddTrashcanButton = true
     
+    // Trashcan Data
     var addTrashcanCell: AddTrashcanCell?
     var addTrashcanCellPath = IndexPath()
     
     var trashcans = [TrashcanCell]()
+    
+    // Trashcan Alert Views
+    var namePrompt = UIAlertController()
+    var trashcanNameTf = UITextField()
     
     // Gesture Recognizer
     var longPress: UILongPressGestureRecognizer!
@@ -32,19 +45,32 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Make navigation bar transparent
+        getFirestoreDatabase()
+        setCurrentUserData()
         makeNavigationBarTransparent()
-        
-        // Hide back button
         hideBackButton()
-
-        // Register nibs to Trashcan Collection View
         registerNibs()
-        
+        setTextFieldDelegate()
         setAddTrashcanCellPath()
-        
-        // Handle gestures
         handleGestures()
+    }
+    
+    // Gets firstore reference and fixes date bug
+    func getFirestoreDatabase() {
+        // Get reference to Dumpsite's Firestore Database
+        firestoredb = Firestore.firestore()
+        
+        // Avoid breaking the app cause by the change of behavior
+        // of system Date objects
+        let settings = firestoredb.settings
+        settings.areTimestampsInSnapshotsEnabled = true
+        firestoredb.settings = settings
+    }
+    
+    func setCurrentUserData() {
+        trashcanList = currentUserData.trashcans
+        trashcanCount = currentUserData.trashcanCount
+        feelsCount = currentUserData.feelsCount
     }
 
     func makeNavigationBarTransparent() {
@@ -58,10 +84,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.navigationItem.hidesBackButton = true
     }
     
-    func dynamicCellSize() {
-        
-    }
-    
     func registerNibs() {
         let addTrashcanCell = UINib(nibName: "AddTrashcanCell", bundle: nil)
         let trashcanCell = UINib(nibName: "TrashcanCell", bundle: nil)
@@ -70,14 +92,18 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         trashcanCollection.register(trashcanCell, forCellWithReuseIdentifier: "trashcanCell")
     }
     
+    func setTextFieldDelegate() {
+        trashcanNameTf.delegate = self
+    }
+    
     // Set initial indexPath of add trash can button
     func setAddTrashcanCellPath() {
-        addTrashcanCellPath = IndexPath(item: count, section: 0)
+        addTrashcanCellPath = IndexPath(item: trashcanCount, section: 0)
     }
     
     // Collection View Functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return count + 1
+        return trashcanCount + 1
     }
     
     // Renders cell per indexPath
@@ -91,7 +117,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             return cell
         } else { // The rest of the cells are the users' existing Trashcan
             let cell = trashcanCollection.dequeueReusableCell(withReuseIdentifier: "trashcanCell", for: indexPath) as! TrashcanCell
-            print("Adding cell at: \(indexPath)") // debugging
+            cell.commonInit(trashcanList[indexPath.item])
             
             // Reference for Trashcan Cells
             trashcans.append(cell)
@@ -104,12 +130,30 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         if indexPath.item == addTrashcanCellPath.item { // Add Trashcan Cell
             // Check if Collection View is in Normal/Delete Mode
             if !isInDeleteMode { // Normal
-                // Add 1 Trashcan
-                count += 1
+                namePrompt = UIAlertController(title: "New Trashcan", message: "Sort your feelings well and give it a good name!", preferredStyle: .alert)
+                namePrompt.addTextField { (textField: UITextField!) in
+                    textField.placeholder = "Feels Be With You"
+                    self.trashcanNameTf = textField
+                }
                 
-                // Insert Trashcan into Collection View
-                addTrashcanCellPath = IndexPath(item: count, section: 0)
-                collectionView.insertItems(at: [indexPath as IndexPath])
+                namePrompt.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                namePrompt.addAction(UIAlertAction(title: "Create", style: .default, handler: { (action: UIAlertAction) in
+                    if let name = self.namePrompt.textFields?.first?.text {
+                        self.trashcanCount += 1
+                        self.trashcanList.append(name)
+                        
+                        self.firestoredb.collection("users").document(self.currentUserData.userId).updateData([
+                            "trashcanCount": self.trashcanCount,
+                            "trashcans": self.trashcanList
+                            ])
+                        
+                        self.addTrashcanCellPath = IndexPath(item: self.trashcanCount, section: 0)
+                        collectionView.insertItems(at: [indexPath as IndexPath])
+                    }
+                }))
+                
+                namePrompt.actions[1].isEnabled = false
+                self.present(namePrompt, animated: true, completion: nil)
             }
         } else { // Trashcan Cell
             // Check if Collection View is in Normal/Delete Mode
@@ -132,9 +176,25 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func deleteTrashcan(collectionView: UICollectionView, indexPath: IndexPath) {
-        count -= 1
-        addTrashcanCellPath = IndexPath(item: count, section: 0)
+        trashcanCount -= 1
+        trashcanList.remove(at: indexPath.item)
+        
+        firestoredb.collection("users").document(currentUserData.userId).updateData([
+            "trashcanCount": trashcanCount,
+            "trashcans": trashcanList
+            ])
+        
+        addTrashcanCellPath = IndexPath(item: trashcanCount, section: 0)
         collectionView.deleteItems(at: [indexPath as IndexPath])
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let maxLength = 18
+        let currentString: NSString = textField.text! as NSString
+        let newString: NSString =
+            currentString.replacingCharacters(in: range, with: string) as NSString
+        namePrompt.actions[1].isEnabled = (newString.length > 0 && newString.length <= maxLength)
+        return newString.length <= maxLength
     }
     
     // Gesture Functions
@@ -171,9 +231,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             // Show delete button on every trashcan
             for trashcan in trashcans {
                 trashcan.btnDelete.isHidden = false
+                trashcan.shakeCell()
             }
             
-            // Hide add trash can cell
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             addTrashcanCell?.isHidden = true
         }
     }
@@ -189,7 +250,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             // Remove delete buttons and show add button
             for trashcan in trashcans {
                 trashcan.btnDelete.isHidden = true
+                trashcan.stopShake()
             }
+            
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             addTrashcanCell?.isHidden = false
         }
     }

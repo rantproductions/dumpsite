@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITabBarControllerDelegate {
 
     // Tag Views
     @IBOutlet var feedView: UITableView!
@@ -24,7 +24,9 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var currentReact: Int!
     
-    // Data for NewFeelsViewController
+    // Data for other View
+    var currentUserData: User!
+    var userId = String()
     var trashcanCount = Int()
     var trashcanList = [String]()
 
@@ -34,12 +36,11 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Get firestore reference
         getFirestoreDatabase()
-        
+        getCurrentUser()
+        getCurrentUserData()
         getTrashcanList()
         checkForUpdates()
-        // loadReacts()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,6 +67,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Set up Feed View's data source and delegate
         feedView.dataSource = self
         feedView.delegate = self
+        
+        self.tabBarController?.delegate = self
         
         // Add blank space at the bottom of Feed View table
         let feedViewInsets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
@@ -97,6 +100,10 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         let settings = firestoredb.settings
         settings.areTimestampsInSnapshotsEnabled = true
         firestoredb.settings = settings
+    }
+    
+    func getCurrentUser() {
+        userId = (Auth.auth().currentUser?.uid)!
     }
     
     func loadFeels() {
@@ -196,16 +203,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    // Returns height of each cell in a row
-    /*func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 { // if feelsCell
-            return 0
-        }
-        else { // if reactCell
-            return 90
-        }
-    }*/
-    
     // Return the cell to use for each row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // feelsCell always index 0
@@ -287,9 +284,24 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    func getCurrentUserData() {
+        firestoredb.collection("users").document(userId)
+            .addSnapshotListener() { (querySnapshot, err) in
+                guard let querySnapshot = querySnapshot else { return }
+                self.currentUserData = User(dictionary: querySnapshot.data()!)
+        }
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if viewController.isKind(of: UINavigationController.self as AnyClass) {
+            let navController = tabBarController.viewControllers![1] as! UINavigationController
+            let destinationController = navController.topViewController as! ProfileViewController
+            destinationController.currentUserData = currentUserData
+        }
+    }
+    
     func getTrashcanList() {
-        let userId = Auth.auth().currentUser?.uid
-        let userRef = firestoredb.collection("users").document(userId!)
+        let userRef = firestoredb.collection("users").document(userId)
         
         userRef.getDocument() { (document, err) in
             // Check for error
@@ -298,6 +310,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             } else {
                 // Check if document is not empty
                 if let document = document, document.exists {
+                    self.currentUserData = User(dictionary: document.data()!)
                     for data in document.data()! {
                         if data.key == "trashcanCount" {
                             self.trashcanCount = data.value as! Int
