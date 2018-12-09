@@ -10,19 +10,23 @@ import UIKit
 import Firebase
 import AudioToolbox
 
-class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate {
+class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate {
 
     // Firestore References
     var firestoredb: Firestore!
     
     // Tag Views
     @IBOutlet var trashcanCollection: UICollectionView!
+    @IBOutlet var feelsCountLabel: UILabel!
     
     // Data
     var currentUserData: User!
-    var feelsCount = Int()
-    var trashcanCount = Int()
-    var trashcanList = [String]()
+    var feelsCount: Int!
+    var trashcanCount: Int!
+    var trashcanList: [String]!
+    
+    var feelsCountTimer: Timer!
+    var count: Int = 0
     
     // Deleting Trashcan
     var isInDeleteMode = false
@@ -31,12 +35,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     // Trashcan Data
     var addTrashcanCell: AddTrashcanCell?
     var addTrashcanCellPath = IndexPath()
-    
     var trashcans = [TrashcanCell]()
     
     // Trashcan Alert Views
-    var namePrompt = UIAlertController()
-    var trashcanNameTf = UITextField()
+    var namePrompt: UIAlertController!
+    var trashcanNameTf: UITextField!
     
     // Gesture Recognizer
     var longPress: UILongPressGestureRecognizer!
@@ -47,12 +50,16 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         getFirestoreDatabase()
         setCurrentUserData()
+        
         makeNavigationBarTransparent()
         hideBackButton()
+        
         registerNibs()
-        setTextFieldDelegate()
         setAddTrashcanCellPath()
+        
         handleGestures()
+        
+        setUpFeelsCounter()
     }
     
     // Gets firstore reference and fixes date bug
@@ -92,13 +99,22 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         trashcanCollection.register(trashcanCell, forCellWithReuseIdentifier: "trashcanCell")
     }
     
-    func setTextFieldDelegate() {
-        trashcanNameTf.delegate = self
-    }
-    
     // Set initial indexPath of add trash can button
     func setAddTrashcanCellPath() {
         addTrashcanCellPath = IndexPath(item: trashcanCount, section: 0)
+    }
+    
+    func setUpFeelsCounter() {
+        feelsCountTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(feelsCounter), userInfo: nil, repeats: true)
+    }
+    
+    @objc func feelsCounter() {
+        if count < feelsCount + 1 {
+            feelsCountLabel.text = "\(count)"
+            count += 1
+        } else {
+            feelsCountTimer.invalidate()
+        }
     }
     
     // Collection View Functions
@@ -118,6 +134,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         } else { // The rest of the cells are the users' existing Trashcan
             let cell = trashcanCollection.dequeueReusableCell(withReuseIdentifier: "trashcanCell", for: indexPath) as! TrashcanCell
             cell.commonInit(trashcanList[indexPath.item])
+            cell.setUpTrashcanName()
+            print("Passing data \(trashcanList[indexPath.item])")
             
             // Reference for Trashcan Cells
             trashcans.append(cell)
@@ -134,6 +152,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 namePrompt.addTextField { (textField: UITextField!) in
                     textField.placeholder = "Feels Be With You"
                     self.trashcanNameTf = textField
+                    self.trashcanNameTf.delegate = self
                 }
                 
                 namePrompt.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -194,6 +213,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         let newString: NSString =
             currentString.replacingCharacters(in: range, with: string) as NSString
         namePrompt.actions[1].isEnabled = (newString.length > 0 && newString.length <= maxLength)
+        print(newString.length > 0 && newString.length <= maxLength)
+        
         return newString.length <= maxLength
     }
     

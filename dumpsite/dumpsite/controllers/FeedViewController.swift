@@ -26,7 +26,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // Data for other View
     var currentUserData: User!
-    var userId = String()
+    var userId: String!
     var trashcanCount = Int()
     var trashcanList = [String]()
 
@@ -103,7 +103,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func getCurrentUser() {
-        userId = (Auth.auth().currentUser?.uid)!
+        userId = Auth.auth().currentUser?.uid
     }
     
     func loadFeels() {
@@ -289,6 +289,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             .addSnapshotListener() { (querySnapshot, err) in
                 guard let querySnapshot = querySnapshot else { return }
                 self.currentUserData = User(dictionary: querySnapshot.data()!)
+                print(self.currentUserData)
         }
     }
     
@@ -311,6 +312,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                 // Check if document is not empty
                 if let document = document, document.exists {
                     self.currentUserData = User(dictionary: document.data()!)
+                    print(self.currentUserData)
                     for data in document.data()! {
                         if data.key == "trashcanCount" {
                             self.trashcanCount = data.value as! Int

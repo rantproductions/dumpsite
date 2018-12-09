@@ -267,6 +267,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="0Bd-Z6-sOW"/>
                     <connections>
+                        <outlet property="feelsCountLabel" destination="pfk-e3-Lyg" id="Lal-oj-9kE"/>
                         <outlet property="trashcanCollection" destination="l1A-iU-acS" id="ZWl-es-Ddb"/>
                     </connections>
                 </viewController>

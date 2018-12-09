@@ -31,8 +31,9 @@
                             <constraint firstAttribute="height" constant="43" id="aF2-KR-SJ0"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3TK-Xv-rHi">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3TK-Xv-rHi">
                         <rect key="frame" x="0.0" y="79" width="74" height="47"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -66,7 +67,7 @@
             <connections>
                 <outlet property="btnDelete" destination="mRJ-JN-Qe6" id="ZGI-8p-slv"/>
                 <outlet property="trashcanBorder" destination="XQ8-tC-KYh" id="j22-D6-rHK"/>
-                <outlet property="trashcanLabel" destination="3TK-Xv-rHi" id="zzc-7Y-3TQ"/>
+                <outlet property="trashcanLabel" destination="3TK-Xv-rHi" id="NlK-bv-Kb8"/>
             </connections>
             <point key="canvasLocation" x="24" y="61.169415292353825"/>
         </collectionViewCell>

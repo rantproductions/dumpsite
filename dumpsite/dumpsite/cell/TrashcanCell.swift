@@ -17,13 +17,12 @@ class TrashcanCell: UICollectionViewCell {
     @IBOutlet var trashcanLabel: UILabel!
     
     // Data
-    var trashcanName = String()
+    var trashcanName: String!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         roundCorners()
-        setUpTrashcanName()
     }
     
     func roundCorners() {
@@ -33,7 +32,6 @@ class TrashcanCell: UICollectionViewCell {
     
     func setUpTrashcanName() {
         trashcanLabel.text = trashcanName
-        print(trashcanName)
     }
     
     func commonInit(_ trashcanName: String) {
