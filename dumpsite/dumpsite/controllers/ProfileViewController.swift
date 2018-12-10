@@ -217,37 +217,39 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                     for document in documents.documents {
                         let feels = Feels(dictionary: document.data())!
                         if feels.userId == self.currentUserData.userId {
+                            print(indexPath.item)
+                            print(self.trashcanList.count)
                             if feels.trashcan == self.trashcanList[indexPath.item] {
                                 feelsToRemove.append(document.documentID)
                             }
                         }
                     }
-                }
-            }
-            
-            for documentId in feelsToRemove {
-                self.firestoredb.collection("feels").document(documentId).delete()
-                self.firestoredb.collection("reactions").document(documentId).delete()
-            }
-            
-            self.trashcanCount -= 1
-            self.trashcanList.remove(at: indexPath.item)
-            
-            self.firestoredb.collection("users").document(self.currentUserData.userId).updateData([
-                "trashcanCount": self.trashcanCount,
-                "trashcans": self.trashcanList
-                ])
-            
-            self.addTrashcanCellPath = IndexPath(item: self.trashcanCount, section: 0)
-            collectionView.deleteItems(at: [indexPath as IndexPath])
-            
-            message = "Good to know you are free from these feels!"
-            let deleteMessage = UIAlertController(title: "Trashcan Deleted", message: message, preferredStyle: .alert)
-            self.present(deleteMessage, animated: true) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                    guard self?.presentedViewController == deleteMessage else { return }
                     
-                    self?.dismiss(animated: true, completion: nil)
+                    for documentId in feelsToRemove {
+                        self.firestoredb.collection("feels").document(documentId).delete()
+                        self.firestoredb.collection("reactions").document(documentId).delete()
+                    }
+                    
+                    self.trashcanCount -= 1
+                    self.trashcanList.remove(at: indexPath.item)
+                    
+                    self.firestoredb.collection("users").document(self.currentUserData.userId).updateData([
+                        "trashcanCount": self.trashcanCount,
+                        "trashcans": self.trashcanList
+                        ])
+                    
+                    self.addTrashcanCellPath = IndexPath(item: self.trashcanCount, section: 0)
+                    collectionView.deleteItems(at: [indexPath as IndexPath])
+                    
+                    message = "Good to know you are free from these feels!"
+                    let deleteMessage = UIAlertController(title: "Trashcan Deleted", message: message, preferredStyle: .alert)
+                    self.present(deleteMessage, animated: true) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                            guard self?.presentedViewController == deleteMessage else { return }
+                            
+                            self?.dismiss(animated: true, completion: nil)
+                        }
+                    }
                 }
             }
         }))

@@ -242,7 +242,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             // the rest of the cells under the feelsCell
             let cell = feedView.dequeueReusableCell(withIdentifier: "reactCell") as! ReactCell
-            // currentReact = indexPath.section
+            currentReact = indexPath.section
             
             let feelsReaction = reactionsArray[indexPath.section]
             var reactCount = [String: Int]()
@@ -293,7 +293,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             // open selected feels
             reactNibOpen[indexPath.section] = true
-            currentReact = indexPath.section
+            // currentReact = indexPath.section
             
             let section = IndexSet.init(integer: indexPath.section)
             feedView.reloadSections(section, with: .none)

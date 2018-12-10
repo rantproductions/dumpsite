@@ -144,76 +144,24 @@ class TrashcanContentViewController: UIViewController, UITableViewDelegate, UITa
         feedView.estimatedSectionFooterHeight = 0
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return feelsArray.count
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if reactNibOpen[section] == false { // else return the feelsCell only
-            return 1
-        }
-        else { // if react is open, return the feelsCell and reactCell
-            return 2
-        }
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // feelsCell always index 0
-        if indexPath.row == 0 {
-            let cell = feedView.dequeueReusableCell(withIdentifier: "feelsCell") as! FeelsCell
-            let feels = feelsArray[indexPath.section]
-            cell.commonInit(feels.moodImage, feels.content, feels.userId, feels.trashcan, feels.timestamp)
-            
-            // Make background of custom cell transparent
-            cell.backgroundColor = .clear
-            cell.backgroundView = UIView()
-            cell.selectedBackgroundView = UIView()
-            return cell
-        } else {
-            // the rest of the cells under the feelsCell
-            let cell = feedView.dequeueReusableCell(withIdentifier: "reactCell") as! ReactCell
-            currentReact = indexPath.section
-            
-            let feelsReaction = reactionsArray[indexPath.section]
-            var reactCount = [String: Int]()
-            var userIdList = [String: [String]]()
-            
-            for react in feelsReaction.reactions {
-                let value = react.value as! [String: Any]
-                
-                var reactName = String()
-                var count = Int()
-                var idList = [String]()
-                
-                for reactData in value {
-                    if(reactData.key == "reactCount") {
-                        count = reactData.value as! Int
-                    }
-                    
-                    if(reactData.key == "reactName") {
-                        reactName = reactData.value as! String
-                    }
-                    
-                    if(reactData.key == "userIdList") {
-                        idList = reactData.value as! [String]
-                    }
-                    
-                    reactCount.updateValue(count, forKey: reactName)
-                    userIdList.updateValue(idList, forKey: reactName)
-                }
-            }
-            
-            cell.commonInit(feelsReaction.feelsId, reactCount, userIdList, feelsReaction.timestamp)
-            
-            // Make background of custom cell transparent
-            cell.backgroundColor = .clear
-            cell.backgroundView = UIView()
-            cell.selectedBackgroundView = UIView()
-            return cell
-        }
+        let cell = feedView.dequeueReusableCell(withIdentifier: "feelsCell") as! FeelsCell
+        let feels = feelsArray[indexPath.section]
+        cell.commonInit(feels.moodImage, feels.content, feels.userId, feels.trashcan, feels.timestamp)
+        cell.selectionStyle = .none
+        
+        // Make background of custom cell transparent
+        cell.backgroundColor = .clear
+        cell.backgroundView = UIView()
+        cell.selectedBackgroundView = UIView()
+        return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    /*func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reactNibOpen[indexPath.section] == true {
             reactNibOpen[indexPath.section] = false
             let section = IndexSet.init(integer: indexPath.section)
@@ -234,5 +182,5 @@ class TrashcanContentViewController: UIViewController, UITableViewDelegate, UITa
                 }
             }
         }
-    }
+    }*/
 }

@@ -112,9 +112,23 @@ class CreateAccountViewController: UIViewController {
         firestoredb.collection("users").document(newUser.dictionary["userId"] as! String).setData(newUser.dictionary, merge: true) { err in
             // Check for errors
             if let err = err {
-                print("Error appending new user in collection: \(err.localizedDescription)")
+                let errorAlert = UIAlertController(title: "Oooooops", message: err.localizedDescription, preferredStyle: .alert)
+                self.present(errorAlert, animated: true) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                        guard self?.presentedViewController == errorAlert else { return }
+                        
+                        self?.dismiss(animated: true, completion: nil)
+                    }
+                }
             } else {
-                print("New user created.")
+                let successAlert = UIAlertController(title: "Hoooray!", message: "Dumpsite construction is on going.", preferredStyle: .alert)
+                self.present(successAlert, animated: true) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                        guard self?.presentedViewController == successAlert else { return }
+                        
+                        self?.dismiss(animated: true, completion: nil)
+                    }
+                }
             }
         }
     }
