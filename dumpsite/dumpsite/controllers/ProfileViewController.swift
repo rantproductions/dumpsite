@@ -189,22 +189,40 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     // Show contents of trashcan
     func showTrashcanContents(indexPath: IndexPath) {
         let trashcanContents = TrashcanContentViewController()
-        trashcanContents.commonInit(indexPath.item + 1)
+        trashcanContents.commonInit(trashcanList[indexPath.item])
         self.navigationController?.pushViewController(trashcanContents, animated: true)
+        // trashcanContents.segregateFeels()
         trashcanCollection.deselectItem(at: indexPath, animated: true)
     }
     
     func deleteTrashcan(collectionView: UICollectionView, indexPath: IndexPath) {
-        trashcanCount -= 1
-        trashcanList.remove(at: indexPath.item)
+        var message = "Deleting a trashcan will delete all feels dumped in it!"
         
-        firestoredb.collection("users").document(currentUserData.userId).updateData([
-            "trashcanCount": trashcanCount,
-            "trashcans": trashcanList
-            ])
-        
-        addTrashcanCellPath = IndexPath(item: trashcanCount, section: 0)
-        collectionView.deleteItems(at: [indexPath as IndexPath])
+        let deleteConfirmation = UIAlertController(title: "Delete Trashcan?", message: message, preferredStyle: .alert)
+        deleteConfirmation.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        deleteConfirmation.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action: UIAlertAction) in
+            self.trashcanCount -= 1
+            self.trashcanList.remove(at: indexPath.item)
+            
+            self.firestoredb.collection("users").document(self.currentUserData.userId).updateData([
+                "trashcanCount": self.trashcanCount,
+                "trashcans": self.trashcanList
+                ])
+            
+            self.addTrashcanCellPath = IndexPath(item: self.trashcanCount, section: 0)
+            collectionView.deleteItems(at: [indexPath as IndexPath])
+            
+            message = "Good to know you are free from these feels!"
+            let deleteMessage = UIAlertController(title: "Trashcan Deleted", message: message, preferredStyle: .alert)
+            self.present(deleteMessage, animated: true) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                    guard self?.presentedViewController == deleteMessage else { return }
+                    
+                    self?.dismiss(animated: true, completion: nil)
+                }
+            }
+        }))
+        present(deleteConfirmation, animated: true, completion:  nil)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

@@ -153,7 +153,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             .addSnapshotListener() { (querySnapshot, err) in
                 guard let querySnapshot = querySnapshot else { return }
                 querySnapshot.documentChanges.forEach { diff in
-                    if diff.type == .added {
+                    let feels = Feels(dictionary: diff.document.data())!
+                    if feels.userId != self.userId {
+                        self.feelsIds.insert(diff.document.documentID, at: 0)
+                        self.feelsArray.insert(Feels(dictionary: diff.document.data())!, at: 0)
+                        self.reactNibOpen.insert(false, at: 0)
+                    } else {
                         self.feelsIds.append(diff.document.documentID)
                         self.feelsArray.append(Feels(dictionary: diff.document.data())!)
                         self.reactNibOpen.append(false)
