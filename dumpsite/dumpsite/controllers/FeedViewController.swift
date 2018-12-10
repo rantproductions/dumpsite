@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AudioToolbox
 
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITabBarControllerDelegate, UIGestureRecognizerDelegate {
 
@@ -23,7 +24,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     var reactionsArray = [Reactions]()
     
     var currentReact: Int!
-    var selectedRow: Int!
     var index = 0
     
     // Data for other View
@@ -34,7 +34,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // Gesture Recognizer
     var longPress: UILongPressGestureRecognizer!
-    var isLongPress = false
 
     // Firebase References
     var firestoredb: Firestore!
@@ -286,22 +285,16 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // What happens when a section, feelsCell, is selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedRow = indexPath.section
-        
-        if isLongPress {
-            isLongPress = false
-            return
-        }
-        
         if reactNibOpen[indexPath.section] == true {
             reactNibOpen[indexPath.section] = false
-            currentReact = indexPath.section
             
             let section = IndexSet.init(integer: indexPath.section)
             feedView.reloadSections(section, with: .fade)
         } else {
             // open selected feels
             reactNibOpen[indexPath.section] = true
+            currentReact = indexPath.section
+            
             let section = IndexSet.init(integer: indexPath.section)
             feedView.reloadSections(section, with: .none)
         }
@@ -380,14 +373,15 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         feedView.addGestureRecognizer(longPress)
     }
     
-    @objc func handleLongPress() {
-        isLongPress = true
-        
-        let feelsReactData = FeelsReactDataController()
-        feelsReactData.commonInit(reactionsArray[selectedRow])
-        self.navigationController?.pushViewController(feelsReactData, animated: true)
-        feelsReactData.getFeelsCount()
-        feelsReactData.initializeCounters()
-        feelsReactData.startReactCounter()
+    @objc func handleLongPress(gesture: UILongPressGestureRecognizer!) {
+        if reactNibOpen[currentReact] == true {
+            let feelsReactData = FeelsReactDataController()
+            feelsReactData.commonInit(reactionsArray[currentReact])
+            
+            if gesture.state == .ended {
+                self.navigationController?.pushViewController(feelsReactData, animated: true)
+                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            }
+        }
     }
 }

@@ -32,6 +32,7 @@ class NewFeelsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var feelsContentHeight = CGFloat()
     var emojiViewController: EmojiViewController?
     var chosenEmoji = String()
+    var emojiArray = ["051-confused", "051-greed", "051-shocked", "051-sick", "051-sleepy", "051-nerd", "051-muted", "051-surprised", "051-suspicious", "051-vain"]
     
     // Temporary
     var trashcanList = ["Mixed Emotions"]
@@ -179,6 +180,8 @@ class NewFeelsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBAction func dumpFeels(_ sender: UIButton) {
         // Check if feelsContent is empty
         if let content = feelsContent.text {
+            if content ==  "Dump your feels and be free." { return }
+            
             // Get trashcan name
             var trashcanName = self.trashcanName.text
             
@@ -186,6 +189,11 @@ class NewFeelsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             // to default "Mixed Emotions"
             if trashcanName == "Choose Trashcan" {
                 trashcanName = "Mixed Emotions"
+            }
+            
+            // Check if mood is empty
+            if !emojiArray.contains(chosenEmoji) {
+                chosenEmoji = emojiArray[0]
             }
             
             // Get current user's id
@@ -220,8 +228,33 @@ class NewFeelsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 }
             }
             
+            self.firestoredb.collection("users").document(userId!).getDocument() { (document, err) in
+                if let err = err {
+                    print(err.localizedDescription)
+                } else {
+                    if let document = document {
+                        let userData = User(dictionary: document.data()!)
+                        var feelsCount = userData!.feelsCount as Int
+                        feelsCount += 1
+                        
+                        self.firestoredb.collection("users").document(userId!).updateData([
+                            "feelsCount": feelsCount
+                            ])
+                    }
+                }
+            }
             // Push to feed view
             self.performSegue(withIdentifier: "afterDump", sender: nil)
+        } else {
+            let message = "Hey! You haven't expressed anything yet!"
+            let deleteMessage = UIAlertController(title: "Huh?", message: message, preferredStyle: .alert)
+            self.present(deleteMessage, animated: true) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                    guard self?.presentedViewController == deleteMessage else { return }
+                    
+                    self?.dismiss(animated: true, completion: nil)
+                }
+            }
         }
     }
     
@@ -317,7 +350,7 @@ extension NewFeelsViewController: UITextViewDelegate {
     // Track if user finishes editing text
     func textViewDidEndEditing(_ textView: UITextView) {
         if feelsContent.text.isEmpty {
-            feelsContent.text = "Rant all you want!"
+            feelsContent.text = "Dump your feels and be free."
             feelsContent.textColor = UIColor.lightGray
         }
     }

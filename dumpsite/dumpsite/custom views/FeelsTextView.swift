@@ -17,12 +17,4 @@ class FeelsTextView: UITextView {
         textContainerInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
     }
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
 }

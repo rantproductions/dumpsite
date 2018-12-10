@@ -28,12 +28,9 @@
                             <constraint firstAttribute="width" constant="229" id="MIr-U5-mNy"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KyB-WH-hk9">
+                    <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KyB-WH-hk9">
                         <rect key="frame" x="139" y="23" width="32.5" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="32.5" id="Aws-FX-hVI"/>
-                            <constraint firstAttribute="height" constant="32" id="i3s-fV-UDq"/>
-                        </constraints>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="tintColor" red="0.89608716960000001" green="0.12917160990000001" blue="0.1060229018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <size key="titleShadowOffset" width="-1" height="-1"/>
                         <state key="normal" title="Happy" image="051-happy-6">
@@ -44,12 +41,9 @@
                             <action selector="react1:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zwD-EP-cUf"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L6w-El-ZZd">
+                    <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L6w-El-ZZd">
                         <rect key="frame" x="179.5" y="23" width="32" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="32" id="3wP-Gd-Aa9"/>
-                            <constraint firstAttribute="width" constant="32" id="xa5-8M-etI"/>
-                        </constraints>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="tintColor" red="0.89608716960000001" green="0.12917160990000001" blue="0.1060229018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <size key="titleShadowOffset" width="-1" height="-1"/>
                         <state key="normal" title="Tease" image="051-wink-1">
@@ -60,15 +54,12 @@
                             <action selector="react2:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="OEQ-zd-GKd"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTN-Bj-cJ2">
+                    <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTN-Bj-cJ2">
                         <rect key="frame" x="218.5" y="23" width="32" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="32" id="9FW-7K-tbp"/>
-                            <constraint firstAttribute="height" constant="32" id="u7V-IT-crc"/>
-                        </constraints>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="tintColor" red="0.89608716960000001" green="0.12917160990000001" blue="0.1060229018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <size key="titleShadowOffset" width="-1" height="-1"/>
-                        <state key="normal" title="Crying" image="051-crying-2">
+                        <state key="normal" title="Crying" image="051-crying-1">
                             <color key="titleColor" red="0.89608716960000001" green="0.12917160990000001" blue="0.1060229018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
@@ -76,12 +67,9 @@
                             <action selector="react3:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LgF-MU-jo4"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HJE-hs-Hkn">
+                    <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HJE-hs-Hkn">
                         <rect key="frame" x="258.5" y="23" width="31.5" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="32" id="3Me-so-fJP"/>
-                            <constraint firstAttribute="width" constant="31.5" id="sGs-e0-TXJ"/>
-                        </constraints>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="tintColor" red="0.89608716960000001" green="0.12917160990000001" blue="0.1060229018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <size key="titleShadowOffset" width="-1" height="-1"/>
                         <state key="normal" title="Bored" image="051-bored">
@@ -92,12 +80,9 @@
                             <action selector="react4:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CeO-ma-gS0"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KB4-2u-ahM">
+                    <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KB4-2u-ahM">
                         <rect key="frame" x="297" y="23" width="32" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="32" id="VRQ-L1-G6H"/>
-                            <constraint firstAttribute="width" constant="32" id="aoK-eV-hkH"/>
-                        </constraints>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="tintColor" red="0.89608716960000001" green="0.12917160990000001" blue="0.1060229018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <size key="titleShadowOffset" width="-1" height="-1"/>
                         <state key="normal" title="Angry" image="051-angry">
@@ -123,33 +108,13 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="tvP-nG-bKN" firstAttribute="leading" secondItem="Bma-Zy-muv" secondAttribute="trailing" constant="22" id="1RL-mi-FP0"/>
-                    <constraint firstItem="eTN-Bj-cJ2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="12" id="2eV-Gv-jly"/>
                     <constraint firstAttribute="trailing" secondItem="tvP-nG-bKN" secondAttribute="trailing" constant="26" id="2v8-u4-OKf"/>
-                    <constraint firstItem="HJE-hs-Hkn" firstAttribute="leading" secondItem="eTN-Bj-cJ2" secondAttribute="trailing" constant="8" id="6MV-kg-XAB"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Bma-Zy-muv" secondAttribute="bottom" constant="16.5" id="6Yx-rY-c9z"/>
                     <constraint firstItem="Bma-Zy-muv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="14.5" id="6aa-D4-gXw"/>
-                    <constraint firstItem="KB4-2u-ahM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="12" id="Ai2-9X-4ZU"/>
-                    <constraint firstItem="L6w-El-ZZd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="12" id="BC5-vm-g78"/>
-                    <constraint firstItem="eTN-Bj-cJ2" firstAttribute="leading" secondItem="L6w-El-ZZd" secondAttribute="trailing" constant="7" id="D4n-X6-Ilr"/>
-                    <constraint firstItem="eTN-Bj-cJ2" firstAttribute="leading" secondItem="L6w-El-ZZd" secondAttribute="trailing" constant="7" id="Eqf-Ay-UxH"/>
-                    <constraint firstItem="KB4-2u-ahM" firstAttribute="leading" secondItem="HJE-hs-Hkn" secondAttribute="trailing" constant="7" id="HfO-sX-P1R"/>
-                    <constraint firstItem="L6w-El-ZZd" firstAttribute="leading" secondItem="KyB-WH-hk9" secondAttribute="trailing" constant="8" id="I3i-ZN-sgI"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="eTN-Bj-cJ2" secondAttribute="bottom" constant="14" id="IIK-2a-pG9"/>
                     <constraint firstAttribute="bottom" secondItem="tvP-nG-bKN" secondAttribute="bottom" constant="11.5" id="Kvv-bE-PqU"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="KB4-2u-ahM" secondAttribute="trailing" constant="30" id="MVl-yc-7to"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="HJE-hs-Hkn" secondAttribute="bottom" constant="14" id="MlF-wq-Qqo"/>
-                    <constraint firstItem="KyB-WH-hk9" firstAttribute="leading" secondItem="Bma-Zy-muv" secondAttribute="trailing" constant="41" id="QMS-s3-yJT"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="KyB-WH-hk9" secondAttribute="bottom" constant="14" id="QcP-8n-uyF"/>
-                    <constraint firstItem="HJE-hs-Hkn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="12" id="Svj-pk-bVJ"/>
-                    <constraint firstItem="KB4-2u-ahM" firstAttribute="leading" secondItem="HJE-hs-Hkn" secondAttribute="trailing" constant="7" id="ZjJ-nO-Bza"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="KB4-2u-ahM" secondAttribute="bottom" constant="14" id="azA-31-fNW"/>
-                    <constraint firstItem="L6w-El-ZZd" firstAttribute="leading" secondItem="KyB-WH-hk9" secondAttribute="trailing" constant="8" id="czS-QY-ih9"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="L6w-El-ZZd" secondAttribute="bottom" constant="14" id="gTe-D7-UdY"/>
                     <constraint firstItem="tvP-nG-bKN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="gWz-qo-o4m"/>
                     <constraint firstItem="Bma-Zy-muv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="11" id="h4l-qY-rbo"/>
                     <constraint firstItem="tvP-nG-bKN" firstAttribute="leading" secondItem="Bma-Zy-muv" secondAttribute="trailing" constant="22" id="lVA-vJ-bDr"/>
-                    <constraint firstItem="KyB-WH-hk9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="12" id="oEf-h6-B9p"/>
-                    <constraint firstItem="HJE-hs-Hkn" firstAttribute="leading" secondItem="eTN-Bj-cJ2" secondAttribute="trailing" constant="8" id="wiW-el-1Zf"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -166,10 +131,10 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="051-angry" width="512" height="512"/>
-        <image name="051-bored" width="512" height="512"/>
-        <image name="051-crying-2" width="512" height="512"/>
-        <image name="051-happy-6" width="512" height="512"/>
-        <image name="051-wink-1" width="512" height="512"/>
+        <image name="051-angry" width="409.60000610351562" height="409.60000610351562"/>
+        <image name="051-bored" width="409.60000610351562" height="409.60000610351562"/>
+        <image name="051-crying-1" width="409.60000610351562" height="409.60000610351562"/>
+        <image name="051-happy-6" width="409.60000610351562" height="409.60000610351562"/>
+        <image name="051-wink-1" width="409.60000610351562" height="409.60000610351562"/>
     </resources>
 </document>

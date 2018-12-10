@@ -29,9 +29,9 @@ class FeelsReactDataController: UIViewController {
         super.viewDidLoad()
 
         makeRoundCorners()
-        // getFeelsCount()
-        // initializeCounters()
-        // startReactCounter()
+        getFeelsCount()
+        initializeCounters()
+        startReactCounter()
     }
     
     func commonInit(_ reactionData: Reactions) {

@@ -253,6 +253,7 @@
                                 <connections>
                                     <action selector="chooseTrashcan:" destination="w9a-na-vUK" eventType="touchUpInside" id="HOs-0P-1mC"/>
                                     <action selector="logoutUser:" destination="lMP-7d-S6b" eventType="touchUpInside" id="YGT-nv-LvR"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="bXJ-LV-wss"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -283,9 +284,6 @@
                         <outlet property="feelsCountLabel" destination="pfk-e3-Lyg" id="Lal-oj-9kE"/>
                         <outlet property="logoutBtn" destination="246-27-KHd" id="KBC-eP-lrT"/>
                         <outlet property="trashcanCollection" destination="l1A-iU-acS" id="ZWl-es-Ddb"/>
-                        <segue destination="BYZ-38-t0r" kind="popoverPresentation" id="AVj-B2-wFl">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="taa-Qv-3sh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -768,6 +766,6 @@
         <segue reference="YTx-Ml-A3p"/>
         <segue reference="Oc5-YR-9hk"/>
         <segue reference="0OQ-x3-3Ln"/>
-        <segue reference="AVj-B2-wFl"/>
+        <segue reference="bXJ-LV-wss"/>
     </inferredMetricsTieBreakers>
 </document>
