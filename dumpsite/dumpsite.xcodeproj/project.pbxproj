@@ -44,6 +44,8 @@
 		7FFB83152167CE2700ADB0A9 /* FeelsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFB83142167CE2700ADB0A9 /* FeelsTextView.swift */; };
 		7FFB83172167DBC300ADB0A9 /* NewFeelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFB83162167DBC300ADB0A9 /* NewFeelsViewController.swift */; };
 		7FFCCCD721764D6E00F12215 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFCCCD621764D6E00F12215 /* LaunchScreenViewController.swift */; };
+		CA23920A21BDFFB300830F72 /* FeelsReactDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA23920821BDFFB300830F72 /* FeelsReactDataController.swift */; };
+		CA23920B21BDFFB300830F72 /* FeelsReactDataController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA23920921BDFFB300830F72 /* FeelsReactDataController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -102,6 +104,8 @@
 		7FFB83162167DBC300ADB0A9 /* NewFeelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeelsViewController.swift; sourceTree = "<group>"; };
 		7FFCCCD621764D6E00F12215 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		A3795D6482CB0A40B3428BB2 /* Pods-dumpsite.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dumpsite.debug.xcconfig"; path = "Pods/Target Support Files/Pods-dumpsite/Pods-dumpsite.debug.xcconfig"; sourceTree = "<group>"; };
+		CA23920821BDFFB300830F72 /* FeelsReactDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeelsReactDataController.swift; sourceTree = "<group>"; };
+		CA23920921BDFFB300830F72 /* FeelsReactDataController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeelsReactDataController.xib; sourceTree = "<group>"; };
 		E445B2A6CE73A3CF243D6462 /* Pods_dumpsite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dumpsite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8DD866BBE87CBDCF83E1C24 /* Pods-dumpsite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dumpsite.release.xcconfig"; path = "Pods/Target Support Files/Pods-dumpsite/Pods-dumpsite.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -244,6 +248,8 @@
 				7FF6E438217259DF00BC5118 /* TrashcanContentViewController.swift */,
 				7FF6E439217259DF00BC5118 /* TrashcanContentViewController.xib */,
 				7FEE043B2175F4C5005004D5 /* CustomSwitch.swift */,
+				CA23920821BDFFB300830F72 /* FeelsReactDataController.swift */,
+				CA23920921BDFFB300830F72 /* FeelsReactDataController.xib */,
 			);
 			path = "custom views";
 			sourceTree = "<group>";
@@ -311,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F91276321661FF900042380 /* Assets.xcassets in Resources */,
+				CA23920B21BDFFB300830F72 /* FeelsReactDataController.xib in Resources */,
 				7F9127722166221000042380 /* HELR45W.ttf in Resources */,
 				7FE03C17217024390084C62E /* AddTrashcanCell.xib in Resources */,
 				7F9127732166221000042380 /* Hero Light.otf in Resources */,
@@ -409,6 +416,7 @@
 				7FEE0436217596EE005004D5 /* DumpsiteConstructionViewController.swift in Sources */,
 				7FE03C16217024390084C62E /* AddTrashcanCell.swift in Sources */,
 				7FF6E43A217259DF00BC5118 /* TrashcanContentViewController.swift in Sources */,
+				CA23920A21BDFFB300830F72 /* FeelsReactDataController.swift in Sources */,
 				7FFB83152167CE2700ADB0A9 /* FeelsTextView.swift in Sources */,
 				7FE333C32172FB620086DD16 /* UserReact.swift in Sources */,
 				7FE333C12172FA930086DD16 /* User.swift in Sources */,

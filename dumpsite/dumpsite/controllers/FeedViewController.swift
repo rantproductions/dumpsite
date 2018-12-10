@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITabBarControllerDelegate {
+class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITabBarControllerDelegate, UIGestureRecognizerDelegate {
 
     // Tag Views
     @IBOutlet var feedView: UITableView!
@@ -23,12 +23,18 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     var reactionsArray = [Reactions]()
     
     var currentReact: Int!
+    var selectedRow: Int!
+    var index = 0
     
     // Data for other View
     var currentUserData: User!
     var userId: String!
     var trashcanCount = Int()
     var trashcanList = [String]()
+    
+    // Gesture Recognizer
+    var longPress: UILongPressGestureRecognizer!
+    var isLongPress = false
 
     // Firebase References
     var firestoredb: Firestore!
@@ -88,6 +94,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Register custom nib, the Feels Cell and React Cell
         feedView.register(feelsCell, forCellReuseIdentifier: "feelsCell")
         feedView.register(reactCell, forCellReuseIdentifier: "reactCell")
+        
+        handleGestures()
     }
     
     // Gets firstore reference and fixes date bug
@@ -158,18 +166,26 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                         self.feelsIds.insert(diff.document.documentID, at: 0)
                         self.feelsArray.insert(Feels(dictionary: diff.document.data())!, at: 0)
                         self.reactNibOpen.insert(false, at: 0)
-                    } else {
+                    }
+                    
+                    if diff.type == .added {
                         self.feelsIds.append(diff.document.documentID)
                         self.feelsArray.append(Feels(dictionary: diff.document.data())!)
                         self.reactNibOpen.append(false)
+                    } else if diff.type == .removed {
+                        self.feelsIds.remove(at: self.index)
+                        self.feelsArray.remove(at: self.index)
+                        self.reactNibOpen.remove(at: self.index)
                     }
                     
+                    self.index += 0
                     DispatchQueue.main.async {
                         self.feedView.reloadData()
                     }
                 }
         }
         
+        index = 0
         let reactsListener = firestoredb.collection("reactions").order(by: "timestamp", descending: true)
             .addSnapshotListener() { (querySnapshot, err) in
                 guard let querySnapshot = querySnapshot else { return }
@@ -179,9 +195,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                         self.reactionsArray[self.currentReact] = Reactions(dictionary: diff.document.data())!
                     } else if diff.type == .added {
                         self.reactionsArray.append(Reactions(dictionary: diff.document.data())!)
+                    } else if diff.type == .removed {
+                        self.reactionsArray.remove(at: self.index)
                     }
                 }
                 
+                self.index += 0
                 DispatchQueue.main.async {
                     self.feedView.reloadData()
                 }
@@ -224,7 +243,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             // the rest of the cells under the feelsCell
             let cell = feedView.dequeueReusableCell(withIdentifier: "reactCell") as! ReactCell
-            currentReact = indexPath.section
+            // currentReact = indexPath.section
             
             let feelsReaction = reactionsArray[indexPath.section]
             var reactCount = [String: Int]()
@@ -267,8 +286,17 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // What happens when a section, feelsCell, is selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedRow = indexPath.section
+        
+        if isLongPress {
+            isLongPress = false
+            return
+        }
+        
         if reactNibOpen[indexPath.section] == true {
             reactNibOpen[indexPath.section] = false
+            currentReact = indexPath.section
+            
             let section = IndexSet.init(integer: indexPath.section)
             feedView.reloadSections(section, with: .fade)
         } else {
@@ -342,5 +370,24 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func createFeels(_ sender: Any) {
         performSegue(withIdentifier: "newFeels", sender: nil)
+    }
+    
+    func handleGestures() {
+        longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        longPress.minimumPressDuration = 0.25
+        longPress.delegate = self
+        
+        feedView.addGestureRecognizer(longPress)
+    }
+    
+    @objc func handleLongPress() {
+        isLongPress = true
+        
+        let feelsReactData = FeelsReactDataController()
+        feelsReactData.commonInit(reactionsArray[selectedRow])
+        self.navigationController?.pushViewController(feelsReactData, animated: true)
+        feelsReactData.getFeelsCount()
+        feelsReactData.initializeCounters()
+        feelsReactData.startReactCounter()
     }
 }

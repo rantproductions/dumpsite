@@ -18,6 +18,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     // Tag Views
     @IBOutlet var trashcanCollection: UICollectionView!
     @IBOutlet var feelsCountLabel: UILabel!
+    @IBOutlet var logoutBtn: UIButton!
     
     // Data
     var currentUserData: User!
@@ -55,6 +56,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         hideBackButton()
         
         registerNibs()
+        makeRoundCorners()
         setAddTrashcanCellPath()
         
         handleGestures()
@@ -97,6 +99,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         trashcanCollection.register(addTrashcanCell, forCellWithReuseIdentifier: "addTrashcanCell")
         trashcanCollection.register(trashcanCell, forCellWithReuseIdentifier: "trashcanCell")
+    }
+    
+    func makeRoundCorners() {
+        logoutBtn.layer.cornerRadius = 6
+        logoutBtn.clipsToBounds = true
     }
     
     // Set initial indexPath of add trash can button
@@ -201,6 +208,28 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         let deleteConfirmation = UIAlertController(title: "Delete Trashcan?", message: message, preferredStyle: .alert)
         deleteConfirmation.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         deleteConfirmation.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action: UIAlertAction) in
+            var feelsToRemove = [String]()
+            self.firestoredb.collection("feels").getDocuments() { (documents, err) in
+                if let err = err {
+                    print(err.localizedDescription)
+                } else {
+                    guard let documents = documents else { return }
+                    for document in documents.documents {
+                        let feels = Feels(dictionary: document.data())!
+                        if feels.userId == self.currentUserData.userId {
+                            if feels.trashcan == self.trashcanList[indexPath.item] {
+                                feelsToRemove.append(document.documentID)
+                            }
+                        }
+                    }
+                }
+            }
+            
+            for documentId in feelsToRemove {
+                self.firestoredb.collection("feels").document(documentId).delete()
+                self.firestoredb.collection("reactions").document(documentId).delete()
+            }
+            
             self.trashcanCount -= 1
             self.trashcanList.remove(at: indexPath.item)
             
@@ -234,6 +263,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         print(newString.length > 0 && newString.length <= maxLength)
         
         return newString.length <= maxLength
+    }
+    
+    
+    @IBAction func logoutUser(_ sender: UIButton) {
+        do { try Auth.auth().signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+        
     }
     
     // Gesture Functions

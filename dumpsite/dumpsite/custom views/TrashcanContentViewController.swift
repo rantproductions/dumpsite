@@ -82,7 +82,7 @@ class TrashcanContentViewController: UIViewController, UITableViewDelegate, UITa
                         
                         self.removeIndex.append(self.index)
                         self.index += 1
-                }
+                    }
                 
                 DispatchQueue.main.async {
                     self.feedView.reloadData()
@@ -96,9 +96,7 @@ class TrashcanContentViewController: UIViewController, UITableViewDelegate, UITa
                 guard let querySnapshot = querySnapshot else { return }
                 querySnapshot.documentChanges.forEach { diff in
                     if diff.type == .modified {
-                        if !self.removeIndex.contains(self.index) {
-                            self.reactionsArray[self.currentReact] = Reactions(dictionary: diff.document.data())!
-                        }
+                        self.reactionsArray[self.currentReact] = Reactions(dictionary: diff.document.data())!
                     } else if diff.type == .added {
                         if !self.removeIndex.contains(self.index) {
                             self.reactionsArray.append(Reactions(dictionary: diff.document.data())!)
