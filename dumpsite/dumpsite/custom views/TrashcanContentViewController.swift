@@ -150,7 +150,7 @@ class TrashcanContentViewController: UIViewController, UITableViewDelegate, UITa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = feedView.dequeueReusableCell(withIdentifier: "feelsCell") as! FeelsCell
-        let feels = feelsArray[indexPath.section]
+        let feels = feelsArray[indexPath.row]
         cell.commonInit(feels.moodImage, feels.content, feels.userId, feels.trashcan, feels.timestamp)
         cell.selectionStyle = .none
         
